@@ -1,0 +1,9 @@
+# Exemplo mínimo e sem credenciais para reconstruir a configuração relevante.
+# Copiar somente as entradas desejadas para a configuração Codex do novo ambiente.
+model = "gpt-6-astra"
+model_reasoning_effort = "low"
+service_tier = "default"
+
+[mcp_servers.bling]
+enabled = true
+url = "https://mcp.bling.com.br/mcp"

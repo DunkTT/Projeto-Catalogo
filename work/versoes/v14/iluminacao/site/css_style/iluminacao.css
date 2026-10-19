@@ -1,0 +1,12 @@
+/* A simulação é local e só existe enquanto o renderizador está ativo. */
+.ambiente:not(.iluminacao-previa){--cor-luz:#7894ba;--brilho:0}
+.ambiente:before{display:none}
+.ambiente .midia:before{display:none}
+.ambiente .sem-midia span{transition:none;text-shadow:none}
+.iluminacao-previa #midia-modal{position:relative;isolation:isolate;overflow:hidden;border-radius:16px;contain:paint}
+.iluminacao-previa #midia-modal:after{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;background:var(--cor-luz);mask-image:radial-gradient(ellipse at 50% 50%,#000 5%,transparent 72%);opacity:calc(var(--brilho) * .55);transition:background-color .28s ease}
+.iluminacao-previa[data-iluminacao="padrao"]:before{display:block;transition:background-color .28s ease;opacity:calc(var(--brilho) * .09)}
+.iluminacao-previa[data-iluminacao="padrao"] .sem-midia span{transition:color .28s ease}
+.iluminacao-previa[data-iluminacao="economico"] #midia-modal:after{transition:none;mask-image:none;opacity:calc(var(--brilho) * .12)}
+.qualidade-iluminacao{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:12px;font-size:.8rem}
+@media(prefers-reduced-motion:reduce){.iluminacao-previa #midia-modal:after,.iluminacao-previa[data-iluminacao="padrao"]:before,.iluminacao-previa[data-iluminacao="padrao"] .sem-midia span{transition:none}}

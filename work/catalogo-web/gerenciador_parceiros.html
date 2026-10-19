@@ -1,0 +1,36 @@
+<!doctype html>
+<!-- Ferramenta local de edição. Nenhuma extensão ou servidor é necessário. -->
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Gerenciador de mini anúncios</title>
+  <link rel="stylesheet" href="./css_style/gerenciador-parceiros.css">
+  <link rel="stylesheet" href="./css_style/arraste-pagina.css">
+</head>
+<body>
+  <main class="painel">
+    <header class="topo"><div><span class="sobretitulo">Área de edição local</span><h1>Mini anúncios de parceiros</h1><p>Cadastre links HTTPS como fontes internas e vincule cada destaque a um produto da loja. O catálogo sempre abre o produto interno.</p></div><a href="./catalogo_estoque_proto1.html">Ver catálogo ↗</a></header>
+    <div class="aviso">As edições são salvas apenas neste navegador. Para publicar para todos, exporte o arquivo gerado e substitua <code>js/cadastro-anuncios-parceiros.js</code> na hospedagem.</div>
+    <section class="cartao" aria-labelledby="titulo-editor"><div class="cabecalho"><div><span class="sobretitulo">Cadastro editorial</span><h2 id="titulo-editor">Nova fonte e anúncio</h2></div><button type="button" id="limpar-formulario" class="botao-secundario">Novo cadastro</button></div>
+      <form id="formulario-anuncio">
+        <input type="hidden" id="identificador-anuncio">
+        <div class="campos"><label>Identificador do parceiro<input id="parceiro-anuncio" type="text" list="parceiros-sugeridos" pattern="[a-z0-9-]{2,70}" value="nitrolux" required><datalist id="parceiros-sugeridos"><option value="nitrolux"></datalist></label><label>Link HTTPS da fonte externa<input id="fonte-anuncio" type="url" inputmode="url" placeholder="https://" required></label></div>
+        <div class="campos"><label>Referência interna ou SKU<input id="referencia-anuncio" type="text" placeholder="Opcional para guardar apenas a fonte"></label><label>Prioridade editorial <span id="valor-prioridade">3 / 5</span><input id="prioridade-anuncio" type="range" min="0" max="5" value="3"></label></div>
+        <p class="ajuda" id="produto-vinculado" role="status">Informe uma referência para conferir o vínculo com o estoque.</p>
+        <div class="campos"><label>Título curto<input id="titulo-anuncio" maxlength="80" placeholder="Ex.: Luz que acolhe"></label><label>Chamada<input id="chamada-anuncio" maxlength="150" placeholder="Ex.: Conheça este modelo no catálogo"></label></div>
+        <label class="caixa"><input id="ativo-anuncio" type="checkbox" checked> Destaque ativo quando houver produto vinculado</label>
+        <div class="acoes"><button type="submit" class="botao-primario">Salvar cadastro</button><span id="mensagem-editor" role="status" aria-live="polite"></span></div>
+      </form>
+    </section>
+    <section class="cartao" aria-labelledby="titulo-cadastros"><div class="cabecalho"><div><span class="sobretitulo">Organização</span><h2 id="titulo-cadastros">Fontes e destaques <span id="total-anuncios"></span></h2></div><div class="acoes"><button type="button" id="exportar-anuncios" class="botao-primario">Exportar para publicar ↓</button><button type="button" id="restaurar-anuncios" class="botao-secundario">Restaurar arquivo atual</button></div></div><p class="ajuda">Uma fonte sem referência fica pendente e nunca é exibida no catálogo. A prioridade, a categoria visitada e a busca ordenam os destaques válidos.</p><div id="lista-anuncios" class="lista-anuncios"></div></section>
+  </main>
+  <script src="./js/estoque.js" defer></script>
+  <script src="./js/cadastro-anuncios-parceiros.js" defer></script>
+  <script src="./js/metadados-produtos.js" defer></script>
+  <script src="./js/anuncios-parceiros.js" defer></script>
+  <script src="./js/gerenciador-parceiros.js" defer></script>
+  <script src="./js/arraste-pagina.js" defer></script>
+</body>
+</html>

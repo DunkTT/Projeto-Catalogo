@@ -1,0 +1,226 @@
+<!-- Ferramenta local para conferir páginas do catálogo em larguras responsivas. -->
+<!-- A página usa um iframe com medidas em pixels CSS e não altera dados do projeto. -->
+<!-- Mantenha este arquivo em work/ferramentas/verificacao, fora do pacote público. -->
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark light">
+  <title>Simulador mobile · ULTRALED</title>
+  <style>
+    :root{
+      color-scheme:dark;
+      --fundo:#10171d;--painel:#19242d;--painel-suave:#202e38;
+      --texto:#edf3f4;--texto-suave:#a6b5ba;--linha:#435661;
+      --acao:#d4e5e8;--texto-acao:#213942;--raio:12px;
+      --espaco:12px;--espaco-curto:8px;
+      font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
+      background:var(--fundo);color:var(--texto);
+    }
+    *{box-sizing:border-box}
+    [hidden]{display:none!important}
+    body{margin:0;min-width:320px;min-height:100vh}
+    button,select,input{font:inherit}
+    .pagina{width:min(1480px,100%);margin:auto;padding:24px}
+    .cabecalho{display:flex;align-items:end;justify-content:space-between;gap:20px;margin-bottom:18px}
+    .sobretitulo{display:block;margin-bottom:5px;color:#b6cbd0;font-size:.68rem;font-weight:650;letter-spacing:.15em;text-transform:uppercase}
+    h1{margin:0;font-size:clamp(1.4rem,3vw,2rem);letter-spacing:-.04em}
+    .descricao{margin:8px 0 0;color:var(--texto-suave);font-size:.9rem;line-height:1.55}
+    .controles{display:flex;flex-wrap:wrap;align-items:end;gap:var(--espaco)}
+    .campo{display:grid;gap:5px;color:var(--texto-suave);font-size:.72rem}
+    .campo select,.campo input,button{
+      min-height:44px;padding:9px 12px;border:1px solid var(--linha);
+      border-radius:var(--raio);background:var(--painel);color:var(--texto);
+    }
+    .campo select{min-width:190px}
+    .campo-modo select{min-width:220px}
+    .medidas{display:flex;gap:6px;align-items:center}
+    .medidas input{width:78px}
+    .separador{color:var(--texto-suave)}
+    button{cursor:pointer;touch-action:manipulation}
+    button:hover{border-color:#a8c2c8}
+    button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid #e5c98d;outline-offset:2px}
+    .botao-principal{background:var(--acao);color:var(--texto-acao);font-weight:650}
+    .painel-online{display:flex;align-items:center;justify-content:space-between;gap:20px;margin:14px 0;padding:20px;border:1px solid var(--linha);border-radius:16px;background:var(--painel)}
+    .painel-online h2{margin:0;font-size:1.1rem}
+    .painel-online p{max-width:70ch;margin:8px 0 0;color:var(--texto-suave);font-size:.82rem;line-height:1.55}
+    .painel-online a{display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;min-height:48px;padding:10px 16px;border-radius:var(--raio);text-decoration:none}
+    .opcoes{display:flex;align-items:center;gap:var(--espaco);margin:14px 0;padding:12px 14px;border:1px solid var(--linha);border-radius:var(--raio);background:var(--painel)}
+    .opcoes label{display:flex;align-items:center;gap:7px;color:var(--texto-suave);font-size:.78rem}
+    .opcoes input{width:100%;max-width:180px;accent-color:#b9d5db}
+    .opcoes strong{color:var(--texto);font-size:.78rem;font-variant-numeric:tabular-nums}
+    .estado{margin-left:auto;color:var(--texto-suave);font-size:.75rem}
+    .palco{min-height:70vh;max-height:calc(100vh - 235px);overflow:auto;padding:18px;border:1px solid var(--linha);border-radius:16px;background:radial-gradient(ellipse at 50% 0%,#293943,#141c22 68%)}
+    .moldura{position:relative;width:var(--largura);height:var(--altura);margin:0 auto;overflow:hidden;border-radius:30px;background:#fff;box-shadow:0 18px 45px #0008;transform:scale(var(--zoom));transform-origin:top center}
+    .moldura:after{content:"";position:absolute;inset:0;border:7px solid #0a0e11;border-radius:inherit;pointer-events:none}
+    iframe{display:block;width:100%;height:100%;border:0;border-radius:23px;background:#fff}
+    .ajuda{margin:12px 2px 0;color:var(--texto-suave);font-size:.74rem;line-height:1.5}
+    @media(max-width:760px){
+      .pagina{padding:16px}
+      .cabecalho{align-items:start;flex-direction:column;gap:var(--espaco)}
+      .controles{width:100%;align-items:stretch}
+      .campo select{min-width:0;width:100%}
+      .campo-pagina{flex:1 1 100%}
+      .campo-medidas{flex:1}
+      .controles>.campo:not(.campo-pagina):not(.campo-medidas){flex:1}
+      .opcoes{flex-wrap:wrap}
+      .painel-online{align-items:flex-start;flex-direction:column}
+      .estado{flex:1 0 100%;margin-left:0}
+      .palco{min-height:65vh;max-height:calc(100vh - 330px);padding:12px}
+    }
+  </style>
+</head>
+<body>
+  <main class="pagina">
+    <header class="cabecalho">
+      <div>
+        <span class="sobretitulo">Ferramenta local de conferência</span>
+        <h1>Simulador mobile</h1>
+        <p class="descricao">Confira as páginas do projeto em larguras diferentes sem sair desta tela.</p>
+      </div>
+      <div class="controles">
+        <label class="campo campo-modo" for="modo">Modo
+          <select id="modo">
+            <option value="online" selected>Publicação online · consulta</option>
+            <option value="interno">Fonte local · testar atualização</option>
+          </select>
+        </label>
+        <label class="campo campo-pagina" for="pagina">Página
+          <select id="pagina">
+            <option value="/catalogo-web/index.html" data-arquivo="../../catalogo-web/index.html" data-publicado="https://ultraled-hortolandia-catalogo.pages.dev/">Home</option>
+            <option value="/catalogo-web/catalogo_estoque_proto1.html" data-arquivo="../../catalogo-web/catalogo_estoque_proto1.html" data-publicado="https://ultraled-hortolandia-catalogo.pages.dev/catalogo_estoque_proto1.html" selected>Catálogo</option>
+            <option value="/catalogo-web/ambientes.html" data-arquivo="../../catalogo-web/ambientes.html" data-publicado="https://ultraled-hortolandia-catalogo.pages.dev/ambientes.html">Ambientes</option>
+            <option value="/catalogo-web/oficina.html" data-arquivo="../../catalogo-web/oficina.html" data-publicado="https://ultraled-hortolandia-catalogo.pages.dev/oficina.html">Oficina</option>
+          </select>
+        </label>
+        <label class="campo campo-dispositivo" for="dispositivo">Tamanho
+          <select id="dispositivo">
+            <option value="360x800">Celular compacto · 360 × 800</option>
+            <option value="390x844" selected>Celular · 390 × 844</option>
+            <option value="430x932">Celular grande · 430 × 932</option>
+            <option value="768x1024">Tablet · 768 × 1024</option>
+            <option value="1280x800">Desktop · 1280 × 800</option>
+            <option value="personalizado">Personalizado</option>
+          </select>
+        </label>
+        <label class="campo campo-medidas" for="largura">Medidas
+          <span class="medidas"><input id="largura" type="number" min="280" max="2560" value="390" inputmode="numeric" aria-label="Largura em pixels CSS"><span class="separador" aria-hidden="true">×</span><input id="altura" type="number" min="320" max="2160" value="844" inputmode="numeric" aria-label="Altura em pixels CSS"></span>
+        </label>
+        <button class="botao-principal controle-interno" id="recarregar" type="button">Recarregar fonte local</button>
+      </div>
+    </header>
+    <section class="opcoes" aria-label="Ajustes da prévia">
+      <button class="controle-interno" id="rotacionar" type="button" aria-pressed="false">Girar tela</button>
+      <label class="controle-interno" for="zoom">Zoom <input id="zoom" type="range" min="50" max="100" step="5" value="85"></label>
+      <strong class="controle-interno" id="valor-zoom">85%</strong>
+      <span id="estado" class="estado" role="status" aria-live="polite">Publicação pronta para consulta</span>
+    </section>
+    <section class="painel-online" id="painel-online" aria-labelledby="titulo-online">
+      <div><span class="sobretitulo">Versão publicada</span><h2 id="titulo-online">Consulte o catálogo online</h2><p>Esta aba abre a publicação ativa em modo de consulta. A política de segurança do site bloqueia a incorporação em molduras.</p></div>
+      <a class="botao-principal" id="abrir-publicacao" href="https://ultraled-hortolandia-catalogo.pages.dev/catalogo_estoque_proto1.html" target="_blank" rel="noopener noreferrer">Abrir publicação em nova aba ↗</a>
+    </section>
+    <section class="palco" id="palco" aria-label="Prévia responsiva da fonte local" hidden>
+      <div class="moldura" id="moldura" style="--largura:390px;--altura:844px;--zoom:.85">
+        <iframe id="previa" title="Prévia mobile da fonte local" src="about:blank"></iframe>
+      </div>
+    </section>
+    <p class="ajuda" id="ajuda">A publicação abre em outra aba. Para simular dimensões e conferir alterações antes de publicar, troque para “Fonte local · testar atualização”.</p>
+  </main>
+  <script>
+    (() => {
+      const moldura = document.getElementById("moldura");
+      const previa = document.getElementById("previa");
+      const seletorDoModo = document.getElementById("modo");
+      const seletorDaPagina = document.getElementById("pagina");
+      const seletorDeTamanho = document.getElementById("dispositivo");
+      const campoLargura = document.getElementById("largura");
+      const campoAltura = document.getElementById("altura");
+      const controleZoom = document.getElementById("zoom");
+      const rotuloZoom = document.getElementById("valor-zoom");
+      const rotuloEstado = document.getElementById("estado");
+      const botaoRotacionar = document.getElementById("rotacionar");
+      const palco = document.getElementById("palco");
+      const painelOnline = document.getElementById("painel-online");
+      const linkPublicado = document.getElementById("abrir-publicacao");
+      const controlesInternos = [...document.querySelectorAll(".campo-dispositivo,.campo-medidas,.controle-interno")];
+      let rotacionada = false;
+
+      function atualizarTamanho() {
+        const largura = Math.max(280, Math.min(2560, Number(campoLargura.value) || 390));
+        const altura = Math.max(320, Math.min(2160, Number(campoAltura.value) || 844));
+        campoLargura.value = String(largura);
+        campoAltura.value = String(altura);
+        moldura.style.setProperty("--largura", `${largura}px`);
+        moldura.style.setProperty("--altura", `${altura}px`);
+      }
+
+      function atualizarZoom() {
+        const zoom = Number(controleZoom.value) / 100;
+        moldura.style.setProperty("--zoom", String(zoom));
+        rotuloZoom.textContent = `${controleZoom.value}%`;
+      }
+
+      function aplicarTamanhoPredefinido() {
+        if (seletorDeTamanho.value === "personalizado") return;
+        const [largura, altura] = seletorDeTamanho.value.split("x").map(Number);
+        campoLargura.value = String(rotacionada ? altura : largura);
+        campoAltura.value = String(rotacionada ? largura : altura);
+        atualizarTamanho();
+      }
+
+      function atualizarPaginaOnline() {
+        const paginaSelecionada = seletorDaPagina.selectedOptions[0];
+        linkPublicado.href = paginaSelecionada.dataset.publicado;
+        linkPublicado.textContent = `Abrir ${paginaSelecionada.textContent.toLocaleLowerCase("pt-BR")} online ↗`;
+      }
+
+      function carregarFonteLocal() {
+        const paginaSelecionada = seletorDaPagina.selectedOptions[0];
+        const caminhoLocal = window.location.protocol === "file:" ? paginaSelecionada.dataset.arquivo : paginaSelecionada.value;
+        previa.src = `${caminhoLocal}?atualizado=${Date.now()}`;
+        rotuloEstado.textContent = "Carregando fonte local…";
+      }
+
+      function aplicarModo() {
+        const modoInterno = seletorDoModo.value === "interno";
+        painelOnline.hidden = modoInterno;
+        palco.hidden = !modoInterno;
+        controlesInternos.forEach(controle => { controle.hidden = !modoInterno; });
+        atualizarPaginaOnline();
+        if (modoInterno) {
+          document.getElementById("ajuda").textContent = "A prévia usa a fonte local atual, sem cache, em pixels CSS. Navegue, abra detalhes e alterne o tema dentro da moldura; toque e gestos podem ser conferidos com mouse ou teclado.";
+          carregarFonteLocal();
+        } else {
+          document.getElementById("ajuda").textContent = "A publicação abre em outra aba. Para simular dimensões e conferir alterações antes de publicar, troque para “Fonte local · testar atualização”.";
+          rotuloEstado.textContent = "Publicação pronta para consulta";
+        }
+      }
+
+      seletorDoModo.addEventListener("change", aplicarModo);
+      seletorDaPagina.addEventListener("change", () => {
+        atualizarPaginaOnline();
+        if (seletorDoModo.value === "interno") carregarFonteLocal();
+      });
+      seletorDeTamanho.addEventListener("change", aplicarTamanhoPredefinido);
+      for (const campo of [campoLargura, campoAltura]) {
+        campo.addEventListener("input", () => { seletorDeTamanho.value = "personalizado"; atualizarTamanho(); });
+      }
+      controleZoom.addEventListener("input", atualizarZoom);
+      botaoRotacionar.addEventListener("click", () => {
+        rotacionada = !rotacionada;
+        [campoLargura.value, campoAltura.value] = [campoAltura.value, campoLargura.value];
+        botaoRotacionar.setAttribute("aria-pressed", String(rotacionada));
+        atualizarTamanho();
+      });
+      document.getElementById("recarregar").addEventListener("click", () => {
+        carregarFonteLocal();
+      });
+      previa.addEventListener("load", () => { rotuloEstado.textContent = "Página carregada"; });
+      atualizarTamanho();
+      atualizarZoom();
+      aplicarModo();
+    })();
+  </script>
+</body>
+</html>

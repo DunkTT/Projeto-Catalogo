@@ -1,0 +1,108 @@
+<!-- Estudo visual de uma sala de estar para a Experiência visual ULTRALED.
+     Grupos identificados separam superfícies, mobiliário e áreas de luz.
+     Coordenadas são artísticas em SVG; não representam medidas físicas. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 760" role="img" aria-labelledby="titulo descricao">
+  <title id="titulo">Sala de estar industrial em camadas</title>
+  <desc id="descricao">Sala com parede de concreto, janela à esquerda, sofá verde acinzentado, mesa de madeira, pendente central e luminária lateral. Ilustração estática em perspectiva discreta.</desc>
+  <defs>
+    <style>
+      :root {
+        --concreto: #d4d0c7; --parede-lateral: #b5b8b1; --piso: #a28d76;
+        --borda: #565b57; --grafite: #303b3b; --metal-claro: #515e5b;
+        --madeira: #a1744e; --madeira-topo: #c39a70; --madeira-sombra: #76543c;
+        --tecido: #6c7e76; --tecido-claro: #87958b; --tecido-sombra: #52665e;
+        --linho: #d8c9ad; --linho-sombra: #b9a88a; --tapete: #c3bbaa;
+        --ceu: #bdcbd0; --ceu-claro: #dbe2de; --luz: #fff1d4; --sombra: #34443f;
+      }
+      .contorno { stroke: var(--borda); stroke-width: 1.5; stroke-linejoin: round; }
+      .estrutura { stroke: var(--grafite); stroke-width: 6; stroke-linecap: round; fill: none; }
+    </style>
+    <linearGradient id="vidro" x2="0" y2="1">
+      <stop stop-color="var(--ceu)"/><stop offset="1" stop-color="var(--ceu-claro)"/>
+    </linearGradient>
+    <radialGradient id="banho-parede">
+      <stop stop-color="var(--luz)" stop-opacity=".26"/><stop offset="1" stop-color="var(--luz)" stop-opacity="0"/>
+    </radialGradient>
+    <clipPath id="limite-parede"><path d="M82 144 700 144 700 457 82 457Z"/></clipPath>
+    <clipPath id="limite-piso"><path d="M82 457 700 457 878 578 260 578Z"/></clipPath>
+  </defs>
+
+  <g id="fundo">
+    <path d="M94 490 705 490 905 623 262 623Z" fill="var(--sombra)" opacity=".10"/>
+  </g>
+  <g id="paredes" class="contorno">
+    <path id="parede-principal" d="M82 144H700V457H82Z" fill="var(--concreto)"/>
+    <path id="parede-lateral" d="M700 144 878 265V578L700 457Z" fill="var(--parede-lateral)"/>
+    <path d="M82 144H700L878 265" fill="none" stroke="var(--linho)" stroke-width="5"/>
+    <path d="M82 447H700L878 568" fill="none" stroke="var(--borda)" stroke-opacity=".45" stroke-width="4"/>
+    <path d="M385 146V447M84 310H699" fill="none" stroke-opacity=".12"/>
+  </g>
+  <g id="piso" class="contorno">
+    <path d="M82 457H700L878 578H260Z" fill="var(--piso)"/>
+    <path d="M260 578H878V593H260ZM82 457 260 578V593L82 472Z" fill="var(--madeira-sombra)"/>
+    <path d="M130 490H749M183 526H801M236 562H855" fill="none" stroke-opacity=".2"/>
+  </g>
+  <g id="area-luz-principal" clip-path="url(#limite-parede)" pointer-events="none" opacity="0">
+    <ellipse cx="462" cy="298" rx="226" ry="180" fill="url(#banho-parede)"/>
+  </g>
+  <g id="area-luz-piso" clip-path="url(#limite-piso)" pointer-events="none" opacity="0">
+    <ellipse cx="505" cy="507" rx="228" ry="69" fill="var(--luz)" opacity=".07"/>
+  </g>
+  <g id="janela" class="contorno">
+    <path d="M119 199H282V372H119Z" fill="var(--grafite)"/>
+    <path d="M128 208H273V363H128Z" fill="url(#vidro)"/>
+    <path d="M128 333 170 309 210 327 249 303 273 315V363H128Z" fill="var(--tecido-claro)" opacity=".35" stroke="none"/>
+    <path d="M201 208V363M128 282H273" stroke="var(--grafite)" stroke-width="6"/>
+    <path d="M113 372H287L299 380H125Z" fill="var(--madeira-topo)"/>
+    <path d="M125 380H299V386H125Z" fill="var(--madeira-sombra)"/>
+  </g>
+  <g id="tapete">
+    <path d="M259 459H637L783 555H405Z" fill="var(--tapete)" class="contorno"/>
+    <path d="M281 466H631L755 548H409Z" fill="none" stroke="var(--linho)" stroke-width="3"/>
+  </g>
+  <g id="sofa" class="contorno">
+    <path d="M294 451 619 451 700 497 363 497Z" fill="var(--sombra)" opacity=".14" stroke="none"/>
+    <path d="M330 436V462M627 446V473M395 476V491" class="estrutura"/>
+    <path d="M307 332Q307 317 323 317H575Q591 317 591 332V406H307Z" fill="var(--tecido-sombra)"/>
+    <path d="M315 331Q315 324 325 324H439V394H315ZM447 324H574Q583 324 583 334V394H447Z" fill="var(--tecido)"/>
+    <path d="M308 389H585L655 433H377Z" fill="var(--tecido-claro)"/>
+    <path d="M377 433H655V476H377Z" fill="var(--tecido)"/>
+    <path d="M308 389 377 433V476L308 432Z" fill="var(--tecido-sombra)"/>
+    <path d="M454 391 519 432M519 435V472" fill="none" stroke-opacity=".6"/>
+    <path d="M296 365H319L389 409H364Z" fill="var(--tecido-claro)"/>
+    <path d="M296 365 364 409V470L296 427Z" fill="var(--tecido-sombra)"/>
+    <path d="M364 409H389V470H364Z" fill="var(--tecido)"/>
+    <path d="M579 365H601L670 409H647Z" fill="var(--tecido-claro)"/>
+    <path d="M601 365 670 409V470L601 427Z" fill="var(--tecido-sombra)"/>
+    <path d="M647 409H670V470H647Z" fill="var(--tecido)"/>
+    <path d="M333 348Q332 340 341 339L379 342 394 389 345 386Z" fill="var(--linho)"/>
+    <path d="M528 345 565 339Q571 339 573 347L583 385 539 391Z" fill="var(--linho-sombra)"/>
+  </g>
+  <g id="mesa" class="contorno">
+    <path d="M450 532 612 532 653 557H493Z" fill="var(--sombra)" opacity=".15" stroke="none"/>
+    <path d="M451 486V534M594 486V534M639 515V554M497 515V554" class="estrutura"/>
+    <path d="M435 477H597L652 511H490Z" fill="var(--madeira-topo)"/>
+    <path d="M490 511H652V521H490ZM435 477 490 511V521L435 487Z" fill="var(--madeira-sombra)"/>
+    <path d="M466 484H575M485 497H608" stroke="var(--madeira)" stroke-opacity=".6"/>
+    <ellipse cx="549" cy="497" rx="24" ry="8" fill="var(--grafite)"/>
+    <path d="M529 489Q531 500 549 500T569 489Z" fill="var(--metal-claro)"/>
+    <ellipse cx="549" cy="489" rx="20" ry="6" fill="var(--concreto)"/>
+  </g>
+  <g id="area-luz-apoio" clip-path="url(#limite-parede)" pointer-events="none" opacity="0">
+    <ellipse cx="661" cy="319" rx="53" ry="79" fill="url(#banho-parede)"/>
+  </g>
+  <g id="luminaria-apoio" class="contorno">
+    <ellipse cx="722" cy="491" rx="29" ry="10" fill="var(--sombra)" opacity=".15" stroke="none"/>
+    <ellipse cx="713" cy="481" rx="25" ry="8" fill="var(--grafite)"/>
+    <path d="M713 479V316Q713 300 694 300H676" class="estrutura"/>
+    <path d="M665 291H687L703 322H649Z" fill="var(--grafite)"/>
+    <ellipse id="ponto-luz-apoio" cx="676" cy="322" rx="27" ry="6" fill="var(--linho)"/>
+  </g>
+  <g id="luminaria-principal" class="contorno">
+    <path d="M443 144H477V149H443Z" fill="var(--grafite)"/>
+    <path d="M460 149V202" stroke="var(--grafite)" stroke-width="3"/>
+    <path d="M440 201H480L511 231H409Z" fill="var(--grafite)"/>
+    <ellipse id="ponto-luz-principal" cx="460" cy="231" rx="51" ry="9" fill="var(--linho)"/>
+    <path d="M447 204H476L492 220" fill="none" stroke="var(--metal-claro)" stroke-width="2"/>
+  </g>
+</svg>

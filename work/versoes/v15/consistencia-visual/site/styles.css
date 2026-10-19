@@ -1,0 +1,452 @@
+/* Home ULTRALED: tokens, componentes e regras responsivas. Fontes locais, sem dependências externas. */
+:root {
+  color-scheme:dark;
+  font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  font-synthesis:none;
+  --preto-tecnico:#141414;
+  --cinza-escuro:#232323;
+  --dourado-luz:#e8c477;
+  --fundo:var(--preto-tecnico);
+  --painel:var(--cinza-escuro);
+  --texto:#f5f3ee;
+  --suave:#c9c4ba;
+  --borda:#858077;
+  --acao:var(--dourado-luz);
+  --texto-acao:var(--preto-tecnico);
+  --luz:var(--dourado-luz);
+  --foco:#f5d997;
+  --halo:#e8c47735;
+  --largura-card:280px;
+  --espaco-grade:14px;
+  --raio-card:18px;
+  background:var(--fundo);
+  color:var(--texto)
+}
+html[data-tema=claro] {
+  color-scheme:light;
+  --fundo:#faf8f3;
+  --painel:#f0ede5;
+  --texto:#25231e;
+  --suave:#615b50;
+  --borda:#827767;
+  --acao:var(--dourado-luz);
+  --texto-acao:var(--preto-tecnico);
+  --luz:#805b19;
+  --foco:#76520f;
+  --halo:#b9801830;
+  background:var(--fundo);
+  color:var(--texto)
+}
+* {
+  box-sizing:border-box
+}
+html {
+  scrollbar-gutter:stable
+}
+body {
+  margin:0;
+  background:var(--fundo);
+  color:var(--texto)
+}
+a {
+  color:inherit
+}
+button {
+  font:inherit;
+  cursor:pointer
+}
+a,button {
+  -webkit-tap-highlight-color:transparent
+}
+a:focus-visible,button:focus-visible {
+  outline:3px solid var(--foco);
+  outline-offset:4px
+}
+a,button {
+  touch-action:manipulation
+}
+.pagina {
+  width:min(1260px,calc(100% - 48px));
+  margin:auto
+}
+.pular-conteudo {
+  position:fixed;
+  left:16px;
+  top:12px;
+  z-index:5;
+  padding:12px 18px;
+  background:var(--acao);
+  color:var(--texto-acao);
+  border-radius:8px;
+  transform:translateY(-160%)
+}
+.pular-conteudo:focus {
+  transform:none
+}
+.cabecalho {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:24px;
+  padding:24px 0
+}
+.marca {
+  display:flex;
+  align-items:center;
+  gap:12px;
+  text-decoration:none
+}
+.logo {
+  display:grid;
+  place-items:center;
+  flex:0 0 46px;
+  width:46px;
+  height:46px;
+  aspect-ratio:1;
+  border:1px solid var(--borda);
+  border-radius:13px;
+  color:var(--luz);
+  font-size:30px;
+  line-height:1
+}
+.marca strong,.marca small {
+  display:block
+}
+.marca strong {
+  font-size:1rem;
+  line-height:1.5
+}
+.marca small {
+  font-size:.75rem;
+  line-height:1.5;
+  color:var(--suave)
+}
+.navegacao {
+  display:flex;
+  align-items:center;
+  gap:8px;
+  flex-wrap:wrap
+}
+.navegacao a,.navegacao button {
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:44px;
+  padding:10px 15px;
+  border:1px solid var(--borda);
+  border-radius:24px;
+  background:transparent;
+  color:var(--texto);
+  text-decoration:none;
+  font-size:.8rem;
+  line-height:1.4
+}
+.navegacao button {
+  width:100px
+}
+.navegacao button:disabled {
+  cursor:default
+}
+.navegacao a:hover,.navegacao button:hover {
+  background:var(--painel)
+}
+.hero {
+  display:grid;
+  grid-template-columns:minmax(0,1.35fr) minmax(0,.8fr);
+  align-items:center;
+  gap:40px;
+  min-height:520px;
+  padding:clamp(28px,4.5vw,64px);
+  margin:16px 0 56px;
+  background:var(--painel);
+  border:1px solid var(--borda);
+  border-radius:28px;
+  overflow:hidden
+}
+.sobretitulo {
+  text-transform:uppercase;
+  letter-spacing:.12em;
+  font-size:.7rem;
+  font-weight:650;
+  color:var(--suave);
+  line-height:1.6
+}
+.saudacao {
+  display:block;
+  min-height:3.2em;
+  max-width:100%;
+  font-size:.8rem;
+  line-height:1.6;
+  color:var(--suave);
+  margin:0 0 14px
+}
+h1 {
+  font-size:clamp(2.3rem,4.4vw,4.1rem);
+  letter-spacing:-.025em;
+  line-height:1.12;
+  margin:14px 0 20px;
+  max-width:780px;
+  text-wrap:balance
+}
+.descricao {
+  font-size:1rem;
+  line-height:1.75;
+  color:var(--suave);
+  max-width:550px;
+  margin:0
+}
+.acoes {
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+  margin-top:28px
+}
+.acao {
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:20px;
+  min-height:48px;
+  padding:13px 18px;
+  border:1px solid var(--borda);
+  border-radius:12px;
+  text-decoration:none;
+  font-size:.875rem;
+  line-height:1.5;
+  font-weight:650
+}
+.principal {
+  background:var(--acao);
+  border-color:var(--acao);
+  color:var(--texto-acao)
+}
+.acao:hover {
+  box-shadow:inset 0 0 0 1px currentColor
+}
+.resumo {
+  color:var(--suave);
+  font-size:.75rem;
+  line-height:1.65;
+  min-height:3.3em;
+  margin:24px 0 0
+}
+.arte {
+  position:relative;
+  display:grid;
+  place-items:center;
+  width:100%;
+  max-width:360px;
+  aspect-ratio:1;
+  justify-self:center;
+  isolation:isolate
+}
+.arte:before {
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:-1;
+  background:radial-gradient(ellipse,var(--halo),transparent 67%)
+}
+.orbita {
+  position:absolute;
+  width:90%;
+  aspect-ratio:1;
+  border:1px solid var(--borda);
+  border-radius:50%;
+  transform:rotate(-20deg) scaleY(.68)
+}
+.orbita.segunda {
+  transform:rotate(45deg) scaleY(.6)
+}
+.nucleo {
+  display:grid;
+  place-items:center;
+  width:70%;
+  aspect-ratio:1;
+  color:var(--luz);
+  font-size:clamp(6rem,12vw,10rem);
+  line-height:1
+}
+.arte small {
+  position:absolute;
+  bottom:0;
+  color:var(--suave);
+  font-size:.7rem;
+  letter-spacing:.12em;
+  text-transform:uppercase
+}
+/* Renderização adiada somente nos cards abaixo do Hero. A altura reservada acompanha o mínimo do card;
+navegadores sem suporte mantêm a grade normal. */
+.atalhos {
+  margin-bottom:48px
+}
+
+.atalhos h2 {
+  font-size:clamp(1.5rem,2.5vw,2.1rem);
+  line-height:1.3;
+  margin:10px 0 24px
+}
+.grade-atalhos {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(min(100%,var(--largura-card)),1fr));
+  gap:var(--espaco-grade)
+}
+.atalho {
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  min-width:0;
+  min-height:215px;
+  padding:22px;
+  border:1px solid var(--borda);
+  border-radius:var(--raio-card);
+  text-decoration:none;
+  background:var(--painel)
+}
+.atalho:hover {
+  border-color:var(--foco)
+}
+.simbolo {
+  display:grid;
+  place-items:center;
+  width:36px;
+  height:36px;
+  aspect-ratio:1;
+  font-size:1.6rem;
+  line-height:1;
+  color:var(--luz);
+  margin-bottom:22px
+}
+.atalho h3 {
+  font-size:.95rem;
+  line-height:1.5;
+  margin:0 0 8px
+}
+.atalho p {
+  font-size:.8rem;
+  line-height:1.6;
+  color:var(--suave);
+  margin:0
+}
+.rodape {
+  padding:24px 0 36px;
+  border-top:1px solid var(--borda);
+  font-size:.75rem;
+  line-height:1.8;
+  color:var(--suave)
+}
+@media(max-width:960px) {
+  .cabecalho {
+    align-items:flex-start;
+    flex-wrap:wrap
+  }
+  .hero {
+    grid-template-columns:1fr;
+    gap:24px;
+    min-height:0
+  }
+  .arte {
+    aspect-ratio:2;
+    max-width:400px
+  }
+  .nucleo {
+    width:40%;
+    font-size:6rem
+  }
+  .orbita {
+    width:60%
+  }
+  .arte small {
+    bottom:-6px
+  }
+}
+@media(max-width:540px) {
+  .pagina {
+    width:calc(100% - 28px)
+  }
+  .cabecalho {
+    padding:18px 0;
+    gap:16px
+  }
+  .navegacao {
+    display:grid;
+    grid-template-columns:repeat(4,minmax(0,1fr));
+    gap:6px;
+    width:100%
+  }
+  .navegacao a,.navegacao button {
+    width:100%;
+    font-size:.73rem;
+    padding:9px 5px
+  }
+  .hero {
+    padding:26px 20px;
+    margin:10px 0 38px;
+    border-radius:22px
+  }
+  .hero h1 {
+    font-size:2.3rem
+  }
+  .descricao {
+    font-size:.94rem
+  }
+  .acoes {
+    display:grid;
+    grid-template-columns:1fr;
+    width:100%
+  }
+  .acao {
+    width:100%
+  }
+  .arte {
+    aspect-ratio:2;
+    max-width:300px
+  }
+  .grade-atalhos {
+    --espaco-grade:10px
+  }
+  .atalho {
+    padding:16px;
+    min-height:225px
+  }
+  
+  .atalho h3 {
+    font-size:.88rem
+  }
+  .atalho p {
+    font-size:.75rem
+  }
+}
+@media(max-width:360px) {
+  .navegacao {
+    grid-template-columns:repeat(2,minmax(0,1fr))
+  }
+  .hero h1 {
+    font-size:2rem;
+    overflow-wrap:anywhere
+  }
+}
+@media(forced-colors:active) {
+  a:focus-visible,button:focus-visible {
+    outline-color:Highlight
+  }
+  .principal {
+    border:1px solid ButtonText
+  }
+}
+@media(prefers-reduced-motion:reduce) {
+  * {
+    scroll-behavior:auto!important;
+    animation:none!important;
+    transition:none!important
+  }
+}
+
+/* Apenas a seção secundária; o Hero permanece disponível imediatamente. */
+.atalhos{
+  content-visibility:auto;
+  contain-intrinsic-size:1px 500px;
+  contain-intrinsic-block-size:auto 500px;
+}
+@media print{.atalhos{content-visibility:visible;contain-intrinsic-size:none}}
+

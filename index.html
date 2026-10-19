@@ -1,0 +1,351 @@
+<!doctype html>
+<!-- Sem dependências. Salve como index.html e abra no navegador. -->
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>Catálogo · Iluminação</title>
+  <style>
+    :root{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;color:#f2f4f8;background:#10131a;--cor-luz:#fff3dd;--brilho:.65}
+    *{box-sizing:border-box}body{margin:0;min-width:280px;isolation:isolate}body:before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(ellipse at 12% 20%,transparent,#10131a 70%),var(--cor-luz);opacity:calc(var(--brilho) * .12);transition:background-color .5s ease,opacity .2s ease}button,input,select{font:inherit}button{cursor:pointer}button,input,select{touch-action:manipulation}button{color:inherit}button:disabled{opacity:.4;cursor:default}[hidden]{display:none!important}
+    :focus-visible{outline:3px solid #c6dbff;outline-offset:4px}button,select,input{border:1px solid #ffffff24;border-radius:12px;background:#202632;padding:12px}input,select{color:inherit;min-width:0}input::placeholder{color:#aeb7c5}
+    .pagina{width:min(1200px,calc(100% - 32px));margin:auto;padding:28px 0 50px}.cabecalho{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-bottom:28px}.marca{display:flex;align-items:center;gap:12px;border:0;background:none;padding:0;text-align:left}.simbolo-logo{width:48px;height:48px;border:1px solid #ffffff30;border-radius:15px;display:grid;place-items:center;font-size:28px;color:#ffe4af;overflow:hidden}.simbolo-logo img{width:100%;height:100%;object-fit:contain}.marca strong{display:block}.marca small,.discreto{color:#aeb7c5;font-size:.8rem}.logo-animado{animation:respirar-logo 3s ease-in-out infinite}@keyframes respirar-logo{50%{opacity:.6;transform:scale(.94)}}
+    .navegacao{display:flex;gap:8px;overflow-x:auto;padding:5px 4px 12px;margin-inline:-4px}.navegacao button{flex-shrink:0;background:transparent;white-space:nowrap}.navegacao button[aria-pressed=true]{background:#e9eff9;color:#172032;border-color:transparent}.subcategorias button{padding:9px 14px;border-radius:100px;font-size:.85rem}
+    .introducao{margin:26px 0}.introducao small{text-transform:uppercase;letter-spacing:.16em;color:#c5cfe0}.introducao h1{font-size:clamp(2rem,5vw,3.7rem);letter-spacing:-.055em;line-height:1.1;margin:14px 0}.introducao p{color:#aeb7c5;line-height:1.6;max-width:600px}
+    .filtros{display:grid;grid-template-columns:minmax(180px,2fr) repeat(3,minmax(130px,1fr)) auto;gap:12px;align-items:end;padding:18px;background:#181e28;border:1px solid #ffffff15;border-radius:18px}.campo{display:grid;gap:8px;font-size:.8rem;color:#bfc9d9}.campo input,.campo select{width:100%}.campo-busca{grid-column:auto}.resultado{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin:24px 0 16px;color:#b9c3d4;font-size:.85rem}
+    .grade{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(260px,100%),1fr));gap:20px}.cartao{border:1px solid #ffffff20;background:#191f2a;border-radius:20px;overflow:hidden;min-width:0}.cartao-conteudo{padding:22px}.cartao h2{font-size:1.2rem;margin:10px 0}.cartao p{color:#b9c3d4;line-height:1.5;font-size:.85rem}.cartao .abrir{width:100%;background:#eef3fc;color:#182333;border:0;margin-top:10px}.cores-cartao{display:flex;align-items:center;gap:8px;margin:18px 0}.ponto{display:inline-block;width:14px;height:14px;border-radius:50%;background:var(--cor-amostra);border:1px solid #ffffff30}.estado-vazio{padding:40px 24px;border:1px dashed #ffffff35;border-radius:18px;text-align:center;color:#bac3d2}.paginacao{display:flex;justify-content:center;align-items:center;gap:16px;margin-top:30px}.paginacao span{font-size:.85rem}.rodape{margin-top:40px;color:#99a5b8;font-size:.75rem;line-height:1.6}
+    .midia{height:210px;display:grid;place-items:center;position:relative;isolation:isolate;background:#10151e;overflow:hidden}.midia:before{content:"";position:absolute;inset:12%;z-index:-1;border-radius:50%;background:var(--cor-luz);filter:blur(42px);opacity:calc(var(--brilho) * .45);transition:background-color .5s ease,opacity .2s ease}.midia img{width:100%;height:100%;object-fit:contain;padding:20px}.sem-midia{display:grid;justify-items:center;gap:12px;text-align:center;padding:20px;color:#b8c3d5;font-size:.8rem}.sem-midia span{font-size:50px;color:var(--cor-luz);transition:color .5s ease}
+    dialog{width:min(960px,calc(100% - 24px));max-height:90svh;padding:0;border:1px solid #ffffff30;border-radius:24px;background:#171d28;color:inherit;overflow:auto;box-shadow:0 30px 100px #0008}dialog::backdrop{background:#060a13c9;backdrop-filter:blur(8px)}.cabecalho-modal{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:18px 24px;border-bottom:1px solid #ffffff15}.cabecalho-modal h2{margin:0;font-size:1rem}.cabecalho-modal button{padding:8px 14px}.mostrador{display:grid;grid-template-columns:1fr 1fr}.ambiente{padding:24px;background:#ffffff03;position:relative;isolation:isolate}.ambiente:before{content:"";position:absolute;inset:0;background:var(--cor-luz);opacity:calc(var(--brilho) * .08);z-index:-1;transition:background-color .5s ease,opacity .2s ease}.ambiente .midia{height:300px;background:transparent;border-radius:18px}.brilho{display:grid;gap:12px;padding:18px;border:1px solid #ffffff20;border-radius:14px;margin-top:18px}.linha{display:flex;justify-content:space-between;gap:12px}input[type=range]{width:100%;margin:0;padding:0;min-height:30px;accent-color:var(--cor-luz)}.detalhes{padding:28px;min-width:0}.detalhes h3{margin:10px 0 16px;font-size:2rem;letter-spacing:-.04em}.descricao{color:#bdc7d8;line-height:1.6;font-size:.9rem}.variacoes{border:0;padding:0;margin:24px 0}.variacoes legend{margin-bottom:12px;font-size:.9rem}.botoes-cores{display:grid;gap:8px;grid-template-columns:repeat(auto-fit,minmax(100px,1fr))}.botoes-cores button{display:grid;justify-items:center;gap:8px;font-size:.8rem;background:transparent}.botoes-cores button[aria-pressed=true]{border-color:var(--cor-luz);background:#ffffff0b}
+    .comparacao{margin:20px 0;padding:16px;border:1px solid #ffffff18;border-radius:14px}.comparacao p{margin:0 0 12px;color:#bdc7d8;font-size:.8rem}.paleta{display:grid;grid-template-columns:repeat(auto-fit,minmax(80px,1fr));gap:10px}.amostra{margin:0;text-align:center;min-width:0}.amostra-luz{height:62px;background:#0d131d;border:1px solid #ffffff20;border-radius:10px;display:grid;place-items:center;position:relative;overflow:hidden;isolation:isolate}.amostra-luz:before{content:"";position:absolute;inset:7px;background:var(--cor-amostra);filter:blur(17px);opacity:.7;z-index:-1}.superficie{width:26px;height:26px;border-radius:50%;background:var(--cor-amostra);box-shadow:0 0 20px var(--cor-amostra)}.amostra figcaption{font-size:.7rem;line-height:1.5;margin-top:8px;color:#bdc7d8}.especificacoes{display:grid;grid-template-columns:1fr 1fr;gap:16px;padding-top:20px;border-top:1px solid #ffffff18}.especificacoes dt{color:#99a8bf;font-size:.75rem}.especificacoes dd{margin:6px 0 0;font-size:.85rem;overflow-wrap:anywhere}.preco{font-weight:700;font-size:1.3rem;margin-top:22px}.somente-leitor{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+    @media(max-width:900px){.filtros{grid-template-columns:1fr 1fr}.campo-busca{grid-column:1/-1}.filtros>button{grid-column:1/-1}.mostrador{grid-template-columns:1fr}.ambiente .midia{height:220px}}
+    @media(max-width:480px){.pagina{width:calc(100% - 24px)}.filtros{padding:14px;gap:12px}.filtros .campo-busca{grid-column:1/-1}.detalhes,.ambiente{padding:20px}.cabecalho>.discreto{display:none}.paginacao{gap:10px}.paginacao button{padding:10px}.botoes-cores{grid-template-columns:repeat(3,1fr)}.botoes-cores button{padding:10px 5px}.cabecalho-modal{padding:16px}.detalhes h3{font-size:1.6rem}}
+    @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}}
+  </style>
+</head>
+<body>
+  <main class="pagina" id="pagina" aria-busy="true">
+    <header class="cabecalho">
+      <button class="marca" id="marca" type="button" aria-label="Voltar à Home"><span class="simbolo-logo" id="logo" aria-hidden="true"></span><span><strong id="nome-marca"></strong><small id="assinatura-marca"></small></span></button>
+      <span class="discreto">Catálogo de produtos</span>
+    </header>
+    <nav class="navegacao" id="categorias" aria-label="Categorias"></nav>
+    <nav class="navegacao subcategorias" id="subcategorias" aria-label="Subcategorias" hidden></nav>
+    <section class="introducao"><small id="contexto">Explore o catálogo</small><h1 id="titulo">Luz para cada momento.</h1><p id="introducao">Encontre seu produto e compare as tonalidades de luz em uma mesma prévia.</p></section>
+    <form class="filtros" id="filtros" role="search" aria-label="Filtrar produtos">
+      <label class="campo campo-busca">Buscar produto ou SKU<input id="busca" type="search" placeholder="Digite o nome ou SKU" autocomplete="off"></label>
+      <label class="campo">Cor da luz<select id="filtro-cor"></select></label>
+      <label class="campo">Ordenar<select id="ordenacao"><option value="nome">Nome: A–Z</option><option value="menor-preco">Menor preço</option><option value="maior-preco">Maior preço</option></select></label>
+      <label class="campo">Produtos por página<select id="por-pagina"></select></label>
+      <button type="button" id="limpar">Limpar filtros</button>
+    </form>
+    <div class="resultado"><span id="contagem" role="status">Carregando produtos…</span><span id="caminho">Home</span></div>
+    <section class="grade" id="grade" aria-label="Produtos"></section>
+    <p class="estado-vazio" id="vazio" hidden>Nenhum produto encontrado. Ajuste os filtros ou escolha outra categoria.</p>
+    <nav class="paginacao" id="paginacao" aria-label="Paginação" hidden><button id="anterior" type="button" aria-label="Página anterior">← Anterior</button><span id="numero-pagina"></span><button id="proxima" type="button" aria-label="Próxima página">Próxima →</button></nav>
+    <footer class="rodape">Preços e disponibilidade a confirmar. As cores apresentadas são simulações visuais; a tonalidade percebida depende da tela e do ambiente.</footer>
+    <noscript>Ative o JavaScript para visualizar os produtos.</noscript>
+  </main>
+  <dialog id="modal" aria-labelledby="titulo-modal">
+    <header class="cabecalho-modal"><h2 id="titulo-modal">Explore a iluminação</h2><button id="fechar" type="button" aria-label="Fechar mostrador">Fechar ×</button></header>
+    <div class="mostrador" id="mostrador">
+      <section class="ambiente" aria-label="Simulação da iluminação"><div id="midia-modal"></div><label class="brilho"><span class="linha"><span>Brilho da prévia</span><output id="valor-brilho" for="brilho">65%</output></span><input id="brilho" type="range" min="0" max="100" value="65"><small class="discreto">Ajuste apenas a simulação visual.</small></label></section>
+      <section class="detalhes"><small class="discreto" id="categoria-modal"></small><h3 id="nome-produto"></h3><p class="descricao" id="descricao-produto"></p>
+        <fieldset class="variacoes"><legend>Cor da luz</legend><div class="botoes-cores" id="variacoes"></div></fieldset>
+        <section class="comparacao" aria-labelledby="titulo-comparacao"><p id="titulo-comparacao">Compare com as outras cores</p><div class="paleta" id="paleta"></div><small class="discreto">Mesma superfície e intensidade de referência.</small></section>
+        <dl class="especificacoes"><div><dt>Potência</dt><dd id="potencia"></dd></div><div><dt>Temperatura de cor</dt><dd id="temperatura"></dd></div><div><dt>Cor selecionada</dt><dd id="cor-selecionada"></dd></div><div><dt>SKU</dt><dd id="sku"></dd></div></dl>
+        <p class="preco" id="preco"></p><p class="discreto" id="estoque"></p><p class="discreto" id="nota-temperatura"></p>
+      </section>
+    </div>
+    <p class="somente-leitor" id="anuncio" role="status" aria-live="polite"></p>
+  </dialog>
+  <script>
+    "use strict";
+    // CONFIGURAÇÃO CENTRAL. IDs e SKUs devem ser únicos; confirme os dados no Bling.
+    const configuracaoDoCatalogo = {
+      marca: { nome: "Sua marca", assinatura: "Iluminação e soluções", simbolo: "✧", caminho: "", animacao: null },
+      quantidadesPorPagina: [6, 12, 24],
+      categorias: [
+        { identificador: "iluminacao", nome: "Iluminação", subcategorias: [
+          { identificador: "lampadas", nome: "Lâmpadas" },
+          { identificador: "plafons", nome: "Plafons" },
+          { identificador: "pendentes", nome: "Pendentes" },
+          { identificador: "spots", nome: "Spots" }
+        ] }
+      ],
+      cores: {
+        quente: { nome: "Branco quente", corVisual: "#ffd49a", temperaturaReferencia: 3000 },
+        neutro: { nome: "Branco neutro", corVisual: "#fff3dd", temperaturaReferencia: 4000 },
+        frio: { nome: "Branco frio", corVisual: "#dceeff", temperaturaReferencia: 6500 }
+      },
+      produtos: [
+        { identificador: "lampada-inteligente-10w", nome: "Lâmpada inteligente 10W", categoria: "iluminacao", subcategoria: "lampadas", potencia: "10 W",
+          descricao: "Explore a iluminação para diferentes momentos e compare as tonalidades antes de escolher.",
+          variacoes: [
+            { sku: "LAMP-10W-AQ", cor: "quente", temperaturaKelvin: null, preco: null, estoque: null },
+            { sku: "LAMP-10W-BN", cor: "neutro", temperaturaKelvin: null, preco: null, estoque: null },
+            { sku: "LAMP-10W-BF", cor: "frio", temperaturaKelvin: null, preco: null, estoque: null }
+          ]
+        }
+      ]
+    };
+    // MÍDIA ISOLADA: preencha manualmente, por SKU. Nenhuma imagem é buscada.
+    const moduloDeMidia = {
+      caminhosPorSku: { "LAMP-10W-AQ": "", "LAMP-10W-BN": "", "LAMP-10W-BF": "" },
+      obterCaminho(sku) { return this.caminhosPorSku[sku] || ""; }
+    };
+    // Animação futura: marca.animacao = elemento => { ...; return () => limpeza; }.
+    // Para uma animação CSS simples, atribua a classe "logo-animado" ao elemento.
+    const repositorioDeProdutos = {
+      async carregar() { return configuracaoDoCatalogo; }
+      // Integração futura: consultar uma API própria com await fetch(...).
+      // Tokens de acesso do Bling devem ficar no servidor.
+    };
+
+    function normalizarTexto(texto) {
+      return String(texto).normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLocaleLowerCase("pt-BR").trim();
+    }
+    function validarConfiguracao(configuracao) {
+      const identificadores = new Set(), skus = new Set(), categorias = new Set();
+      if (!configuracao.quantidadesPorPagina.length || configuracao.quantidadesPorPagina.some(valor => !Number.isSafeInteger(valor) || valor < 1)) throw new Error("Paginação inválida.");
+      for (const categoria of configuracao.categorias) {
+        if (!categoria.identificador || categorias.has(categoria.identificador)) throw new Error("Categoria inválida.");
+        categorias.add(categoria.identificador);
+        const subcategorias = new Set();
+        for (const subcategoria of categoria.subcategorias) {
+          if (!subcategoria.identificador || subcategorias.has(subcategoria.identificador)) throw new Error("Subcategoria inválida.");
+          subcategorias.add(subcategoria.identificador);
+        }
+      }
+      for (const cor of Object.values(configuracao.cores)) {
+        if (!cor.nome || !/^#[\da-f]{6}$/i.test(cor.corVisual) || !Number.isFinite(cor.temperaturaReferencia) || cor.temperaturaReferencia <= 0) throw new Error("Cor inválida.");
+      }
+      for (const produto of configuracao.produtos) {
+        const categoria = configuracao.categorias.find(item => item.identificador === produto.categoria);
+        if (!produto.identificador || identificadores.has(produto.identificador) || !produto.nome || !categoria?.subcategorias.some(item => item.identificador === produto.subcategoria) || !produto.variacoes.length) throw new Error("Produto inválido.");
+        identificadores.add(produto.identificador);
+        const cores = new Set();
+        for (const variacao of produto.variacoes) {
+          if (!variacao.sku || skus.has(variacao.sku) || !configuracao.cores[variacao.cor] || cores.has(variacao.cor) ||
+            !(variacao.preco === null || (Number.isFinite(variacao.preco) && variacao.preco >= 0)) ||
+            !(variacao.estoque === null || (Number.isSafeInteger(variacao.estoque) && variacao.estoque >= 0)) ||
+            !(variacao.temperaturaKelvin === null || (Number.isFinite(variacao.temperaturaKelvin) && variacao.temperaturaKelvin > 0))) throw new Error("Variação inválida.");
+          skus.add(variacao.sku); cores.add(variacao.cor);
+        }
+      }
+      return configuracao;
+    }
+
+    // ESTADO E CONSULTAS: nenhuma manipulação do DOM.
+    function criarEstadoDoCatalogo(configuracao) {
+      const estadoInicial = { categoria: "", subcategoria: "", busca: "", cor: "", ordenacao: "nome", porPagina: configuracao.quantidadesPorPagina[0], pagina: 1, produtoAberto: "", skuSelecionado: "", brilho: 65 };
+      let estadoDoProdutoAtual = { ...estadoInicial };
+      const observadores = new Set();
+      function obterPrecoParaOrdenacao(produto) {
+        const precos = produto.variacoes.filter(item => !estadoDoProdutoAtual.cor || item.cor === estadoDoProdutoAtual.cor).map(item => item.preco).filter(valor => valor !== null);
+        return precos.length ? Math.min(...precos) : null;
+      }
+      function consultarProdutos() {
+        const estado = estadoDoProdutoAtual, busca = normalizarTexto(estado.busca);
+        const produtos = configuracao.produtos.filter(produto =>
+          (!estado.categoria || produto.categoria === estado.categoria) &&
+          (!estado.subcategoria || produto.subcategoria === estado.subcategoria) &&
+          (!estado.cor || produto.variacoes.some(item => item.cor === estado.cor)) &&
+          (!busca || normalizarTexto([produto.nome, produto.descricao, ...produto.variacoes.map(item => item.sku)].join(" ")).includes(busca))
+        );
+        produtos.sort((primeiro, segundo) => {
+          const porNome = primeiro.nome.localeCompare(segundo.nome, "pt-BR");
+          if (estado.ordenacao === "nome") return porNome;
+          const precoPrimeiro = obterPrecoParaOrdenacao(primeiro), precoSegundo = obterPrecoParaOrdenacao(segundo);
+          if (precoPrimeiro === null) return precoSegundo === null ? porNome : 1;
+          if (precoSegundo === null) return -1;
+          return (estado.ordenacao === "menor-preco" ? precoPrimeiro - precoSegundo : precoSegundo - precoPrimeiro) || porNome;
+        });
+        const totalPaginas = Math.max(1, Math.ceil(produtos.length / estado.porPagina));
+        const pagina = Math.min(totalPaginas, Math.max(1, estado.pagina));
+        return { produtos: produtos.slice((pagina - 1) * estado.porPagina, pagina * estado.porPagina), total: produtos.length, totalPaginas, pagina };
+      }
+      function obterEstado() { return { ...estadoDoProdutoAtual, consulta: consultarProdutos() }; }
+      function atualizar(alteracoes, motivo) {
+        estadoDoProdutoAtual = { ...estadoDoProdutoAtual, ...alteracoes };
+        estadoDoProdutoAtual.pagina = consultarProdutos().pagina;
+        observadores.forEach(observador => observador(obterEstado(), motivo));
+      }
+      return {
+        observar(observador) { observadores.add(observador); observador(obterEstado(), "iniciar"); return () => observadores.delete(observador); },
+        selecionarCategoria(categoria) { if (categoria && !configuracao.categorias.some(item => item.identificador === categoria)) return; atualizar({ categoria, subcategoria: "", pagina: 1 }, "catalogo"); },
+        selecionarSubcategoria(subcategoria) { const categoria = configuracao.categorias.find(item => item.identificador === estadoDoProdutoAtual.categoria); if (subcategoria && !categoria?.subcategorias.some(item => item.identificador === subcategoria)) return; atualizar({ subcategoria, pagina: 1 }, "catalogo"); },
+        filtrar(alteracoes) { atualizar({ ...alteracoes, pagina: 1 }, "catalogo"); },
+        mudarPagina(deslocamento) { atualizar({ pagina: estadoDoProdutoAtual.pagina + deslocamento }, "catalogo"); },
+        limparFiltros() { atualizar({ busca: "", cor: "", ordenacao: "nome", pagina: 1 }, "catalogo"); },
+        voltarParaHome() { atualizar({ ...estadoInicial }, "catalogo"); },
+        abrirProduto(identificador) { const produto = configuracao.produtos.find(item => item.identificador === identificador); if (!produto) return; const variacao = produto.variacoes.find(item => item.cor === estadoDoProdutoAtual.cor) || produto.variacoes[0]; atualizar({ produtoAberto: identificador, skuSelecionado: variacao.sku }, "abrir"); },
+        selecionarVariacao(sku) { const produto = configuracao.produtos.find(item => item.identificador === estadoDoProdutoAtual.produtoAberto); if (produto?.variacoes.some(item => item.sku === sku)) atualizar({ skuSelecionado: sku }, "variacao"); },
+        ajustarBrilho(valor) { const brilho = Number(valor); if (Number.isFinite(brilho)) atualizar({ brilho: Math.min(100, Math.max(0, brilho)) }, "brilho"); },
+        fecharProduto() { atualizar({ produtoAberto: "", skuSelecionado: "" }, "fechar"); }
+      };
+    }
+
+    // VISUALIZAÇÃO: criação de elementos, mídia e eventos.
+    function criarVisualizacao(configuracao, estado) {
+      const obterElemento = identificador => document.getElementById(identificador);
+      const moeda = new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" });
+      const formatarPreco = preco => preco === null ? "Preço sob consulta" : moeda.format(preco);
+      let limparAnimacaoDoLogo = () => {};
+      function criarElemento(tag, classe, texto) { const elemento = document.createElement(tag); if (classe) elemento.className = classe; if (texto !== undefined) elemento.textContent = texto; return elemento; }
+      function criarBotao(texto, acao, selecionado) { const botao = criarElemento("button", "", texto); botao.type = "button"; if (selecionado !== undefined) botao.setAttribute("aria-pressed", String(selecionado)); botao.addEventListener("click", acao); return botao; }
+      function caminhoSeguro(caminho) { const valor = String(caminho || "").trim(); return !valor || /^[\\/]/.test(valor) || (/^[a-z][a-z\d+.-]*:/i.test(valor) && !/^https:\/\//i.test(valor)) ? "" : valor; }
+      function renderizarLogo() {
+        limparAnimacaoDoLogo();
+        const logo = obterElemento("logo"), marca = configuracao.marca;
+        logo.replaceChildren(criarElemento("span", "", marca.simbolo));
+        const caminho = caminhoSeguro(marca.caminho);
+        if (caminho) { const imagem = criarElemento("img"); imagem.alt = ""; imagem.addEventListener("load", () => logo.replaceChildren(imagem), { once: true }); imagem.src = caminho; }
+        obterElemento("nome-marca").textContent = marca.nome;
+        obterElemento("assinatura-marca").textContent = marca.assinatura;
+        limparAnimacaoDoLogo = typeof marca.animacao === "function" ? (marca.animacao(logo) || (() => {})) : () => {};
+      }
+      function criarMidia(produto, variacao) {
+        const area = criarElemento("div", "midia"), cor = configuracao.cores[variacao.cor];
+        area.style.setProperty("--cor-luz", cor.corVisual);
+        const ausencia = criarElemento("div", "sem-midia");
+        const simbolo = criarElemento("span", "", "✧"); simbolo.setAttribute("aria-hidden", "true");
+        ausencia.append(simbolo, criarElemento("small", "", "Imagem ainda não cadastrada")); area.append(ausencia);
+        const caminho = caminhoSeguro(moduloDeMidia.obterCaminho(variacao.sku));
+        if (caminho) {
+          const imagem = criarElemento("img"); imagem.alt = `${produto.nome} — ${cor.nome}`; imagem.hidden = true; imagem.decoding = "async";
+          imagem.addEventListener("load", () => { ausencia.hidden = true; imagem.hidden = false; }, { once: true });
+          imagem.addEventListener("error", () => { imagem.remove(); ausencia.lastElementChild.textContent = "Imagem indisponível"; }, { once: true });
+          area.append(imagem); imagem.src = caminho;
+        }
+        return area;
+      }
+      function renderizarNavegacao(atual) {
+        const foco = document.activeElement;
+        const navegacaoComFoco = foco?.closest("nav.navegacao");
+        const nomeComFoco = navegacaoComFoco ? foco.textContent : null;
+        obterElemento("categorias").replaceChildren(criarBotao("Home", () => estado.voltarParaHome(), !atual.categoria), ...configuracao.categorias.map(categoria => criarBotao(categoria.nome, () => estado.selecionarCategoria(categoria.identificador), atual.categoria === categoria.identificador)));
+        const categoria = configuracao.categorias.find(item => item.identificador === atual.categoria);
+        const subcategorias = obterElemento("subcategorias"); subcategorias.hidden = !categoria;
+        subcategorias.replaceChildren(...(categoria ? [criarBotao("Todos", () => estado.selecionarSubcategoria(""), !atual.subcategoria), ...categoria.subcategorias.map(item => criarBotao(item.nome, () => estado.selecionarSubcategoria(item.identificador), item.identificador === atual.subcategoria))] : []));
+        if (navegacaoComFoco) Array.from(navegacaoComFoco.children).find(botao => botao.textContent === nomeComFoco)?.focus({ preventScroll: true });
+        const subcategoria = categoria?.subcategorias.find(item => item.identificador === atual.subcategoria);
+        obterElemento("caminho").textContent = ["Home", categoria?.nome, subcategoria?.nome].filter(Boolean).join(" / ");
+        obterElemento("titulo").textContent = subcategoria?.nome || categoria?.nome || "Luz para cada momento.";
+      }
+      function renderizarCatalogo(atual) {
+        renderizarNavegacao(atual);
+        for (const [identificador, valor] of [["busca", atual.busca], ["filtro-cor", atual.cor], ["ordenacao", atual.ordenacao], ["por-pagina", atual.porPagina]]) obterElemento(identificador).value = String(valor);
+        const { produtos, total, totalPaginas, pagina } = atual.consulta;
+        obterElemento("grade").replaceChildren(...produtos.map(produto => {
+          const variacao = produto.variacoes.find(item => item.cor === atual.cor) || produto.variacoes[0];
+          const cartao = criarElemento("article", "cartao"), conteudo = criarElemento("div", "cartao-conteudo");
+          const categoria = configuracao.categorias.find(item => item.identificador === produto.categoria);
+          conteudo.append(criarElemento("small", "discreto", categoria.subcategorias.find(item => item.identificador === produto.subcategoria).nome), criarElemento("h2", "", produto.nome), criarElemento("p", "", produto.descricao));
+          const cores = criarElemento("div", "cores-cartao");
+          produto.variacoes.forEach(item => { const cor = configuracao.cores[item.cor], ponto = criarElemento("span", "ponto"); ponto.style.setProperty("--cor-amostra", cor.corVisual); ponto.title = cor.nome; ponto.setAttribute("aria-label", cor.nome); ponto.setAttribute("role", "img"); cores.append(ponto); });
+          const abrir = criarBotao("Explorar produto →", () => estado.abrirProduto(produto.identificador)); abrir.className = "abrir"; abrir.setAttribute("aria-label", `Explorar ${produto.nome}`);
+          conteudo.append(cores, criarElemento("strong", "", formatarPreco(variacao.preco)), abrir); cartao.append(criarMidia(produto, variacao), conteudo); return cartao;
+        }));
+        const inicio = total ? (pagina - 1) * atual.porPagina + 1 : 0, fim = Math.min(pagina * atual.porPagina, total);
+        obterElemento("contagem").textContent = total ? `${inicio}–${fim} de ${total} ${total === 1 ? "produto" : "produtos"}` : "Nenhum produto encontrado";
+        obterElemento("vazio").hidden = total !== 0; obterElemento("paginacao").hidden = total === 0;
+        obterElemento("numero-pagina").textContent = `Página ${pagina} de ${totalPaginas}`;
+        obterElemento("anterior").disabled = pagina <= 1; obterElemento("proxima").disabled = pagina >= totalPaginas;
+      }
+      function renderizarMudancaDeCor(atual) {
+        const produto = configuracao.produtos.find(item => item.identificador === atual.produtoAberto);
+        if (!produto) return;
+        const variacao = produto.variacoes.find(item => item.sku === atual.skuSelecionado), cor = configuracao.cores[variacao.cor];
+        obterElemento("mostrador").style.setProperty("--cor-luz", cor.corVisual);
+        obterElemento("mostrador").style.setProperty("--brilho", atual.brilho / 100);
+        document.documentElement.style.setProperty("--cor-luz", cor.corVisual);
+        document.documentElement.style.setProperty("--brilho", atual.brilho / 100);
+        const midia = obterElemento("midia-modal").firstElementChild;
+        if (midia) midia.style.setProperty("--cor-luz", cor.corVisual);
+        obterElemento("brilho").value = atual.brilho; obterElemento("valor-brilho").value = `${atual.brilho}%`;
+        obterElemento("brilho").setAttribute("aria-valuetext", `${atual.brilho}%`);
+      }
+      function renderizarMostrador(atual, motivo) {
+        if (motivo === "brilho") { renderizarMudancaDeCor(atual); return; }
+        const produto = configuracao.produtos.find(item => item.identificador === atual.produtoAberto); if (!produto) return;
+        const variacao = produto.variacoes.find(item => item.sku === atual.skuSelecionado), cor = configuracao.cores[variacao.cor];
+        if (motivo === "abrir") {
+          obterElemento("nome-produto").textContent = produto.nome;
+          obterElemento("descricao-produto").textContent = produto.descricao;
+          obterElemento("potencia").textContent = produto.potencia;
+          const categoria = configuracao.categorias.find(item => item.identificador === produto.categoria);
+          obterElemento("categoria-modal").textContent = `${categoria.nome} / ${categoria.subcategorias.find(item => item.identificador === produto.subcategoria).nome}`;
+          obterElemento("variacoes").replaceChildren(...produto.variacoes.map(item => {
+            const botao = criarBotao("", () => estado.selecionarVariacao(item.sku), item.sku === variacao.sku), ponto = criarElemento("span", "ponto");
+            ponto.style.setProperty("--cor-amostra", configuracao.cores[item.cor].corVisual); ponto.setAttribute("aria-hidden", "true"); botao.dataset.sku = item.sku;
+            botao.append(ponto, criarElemento("span", "", configuracao.cores[item.cor].nome)); return botao;
+          }));
+        }
+        for (const botao of obterElemento("variacoes").children) botao.setAttribute("aria-pressed", String(botao.dataset.sku === variacao.sku));
+        const recipienteDeMidia = obterElemento("midia-modal");
+        const caminhoDaMidia = caminhoSeguro(moduloDeMidia.obterCaminho(variacao.sku));
+        if (motivo === "abrir" || recipienteDeMidia.dataset.caminho !== caminhoDaMidia) {
+          recipienteDeMidia.replaceChildren(criarMidia(produto, variacao));
+          recipienteDeMidia.dataset.caminho = caminhoDaMidia;
+        } else {
+          const imagem = recipienteDeMidia.querySelector("img");
+          if (imagem) imagem.alt = `${produto.nome} — ${cor.nome}`;
+        }
+        const outrasCores = produto.variacoes.filter(item => item.sku !== variacao.sku);
+        obterElemento("paleta").replaceChildren(...outrasCores.map(item => {
+          const outraCor = configuracao.cores[item.cor], amostra = criarElemento("figure", "amostra"), luz = criarElemento("div", "amostra-luz");
+          luz.style.setProperty("--cor-amostra", outraCor.corVisual); luz.setAttribute("aria-hidden", "true"); luz.append(criarElemento("span", "superficie"));
+          amostra.append(luz, criarElemento("figcaption", "", outraCor.nome)); return amostra;
+        }));
+        obterElemento("paleta").parentElement.hidden = outrasCores.length === 0;
+        const temperaturaConfirmada = variacao.temperaturaKelvin !== null;
+        obterElemento("temperatura").textContent = `${variacao.temperaturaKelvin ?? cor.temperaturaReferencia} K${temperaturaConfirmada ? "" : " · referência visual"}`;
+        obterElemento("nota-temperatura").textContent = temperaturaConfirmada ? "" : "Temperatura usada na simulação; especificação do produto a confirmar.";
+        obterElemento("cor-selecionada").textContent = cor.nome; obterElemento("sku").textContent = variacao.sku;
+        obterElemento("preco").textContent = formatarPreco(variacao.preco);
+        obterElemento("estoque").textContent = variacao.estoque === null ? "Disponibilidade a confirmar" : variacao.estoque === 0 ? "Indisponível no momento" : `${variacao.estoque} ${variacao.estoque === 1 ? "unidade disponível" : "unidades disponíveis"}`;
+        obterElemento("anuncio").textContent = `${cor.nome} selecionado. Comparação disponível com ${outrasCores.map(item => configuracao.cores[item.cor].nome).join(" e ") || "nenhuma outra cor"}.`;
+        renderizarMudancaDeCor(atual);
+      }
+      function inicializar() {
+        renderizarLogo();
+        const opcao = (valor, nome) => { const elemento = criarElemento("option", "", nome); elemento.value = valor; return elemento; };
+        obterElemento("filtro-cor").replaceChildren(opcao("", "Todas as cores"), ...Object.entries(configuracao.cores).map(([identificador, cor]) => opcao(identificador, cor.nome)));
+        obterElemento("por-pagina").replaceChildren(...configuracao.quantidadesPorPagina.map(valor => opcao(valor, valor)));
+        obterElemento("marca").addEventListener("click", () => estado.voltarParaHome());
+        obterElemento("filtros").addEventListener("submit", evento => evento.preventDefault());
+        obterElemento("busca").addEventListener("input", evento => estado.filtrar({ busca: evento.target.value }));
+        obterElemento("filtro-cor").addEventListener("change", evento => estado.filtrar({ cor: evento.target.value }));
+        obterElemento("ordenacao").addEventListener("change", evento => estado.filtrar({ ordenacao: evento.target.value }));
+        obterElemento("por-pagina").addEventListener("change", evento => estado.filtrar({ porPagina: Number(evento.target.value) }));
+        obterElemento("limpar").addEventListener("click", () => estado.limparFiltros());
+        obterElemento("anterior").addEventListener("click", () => estado.mudarPagina(-1));
+        obterElemento("proxima").addEventListener("click", () => estado.mudarPagina(1));
+        obterElemento("brilho").addEventListener("input", evento => estado.ajustarBrilho(evento.target.value));
+        obterElemento("fechar").addEventListener("click", () => obterElemento("modal").close());
+        obterElemento("modal").addEventListener("close", () => estado.fecharProduto());
+        estado.observar((atual, motivo) => {
+          if (["iniciar", "catalogo"].includes(motivo)) renderizarCatalogo(atual);
+          if (["abrir", "variacao", "brilho"].includes(motivo)) renderizarMostrador(atual, motivo);
+          if (motivo === "abrir" && !obterElemento("modal").open) obterElemento("modal").showModal();
+        });
+        obterElemento("pagina").setAttribute("aria-busy", "false");
+      }
+      return { inicializar, renderizarLogo };
+    }
+    async function inicializarCatalogo() {
+      try {
+        const configuracao = validarConfiguracao(await repositorioDeProdutos.carregar());
+        const estado = criarEstadoDoCatalogo(configuracao);
+        criarVisualizacao(configuracao, estado).inicializar();
+      } catch (erro) {
+        console.error("Falha ao carregar o catálogo:", erro);
+        document.getElementById("contagem").textContent = "Não foi possível carregar o catálogo. Confira a configuração e recarregue a página.";
+        document.getElementById("pagina").setAttribute("aria-busy", "false");
+      }
+    }
+    void inicializarCatalogo();
+  </script>
+</body>
+</html>

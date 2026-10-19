@@ -1,0 +1,38 @@
+# Dados operacionais locais: preservar fora do repositório.
+/exportacoes/
+/work/ferramentas/gestao-local/dados-locais/
+
+# Pacotes de publicação são artefatos gerados; versionar as fontes, se necessário.
+/work/versoes/**/*.zip
+
+# Dependências e saídas comuns de Node.js.
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# Arquivos temporários e configurações locais.
+*.tmp
+*.temp
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Segredos e autenticação locais.
+.env
+.env.*
+!.env.example
+**/credentials.json
+**/token.json
+**/auth.json
+**/authentication.json
+**/.auth/
+**/auth-local/
+
+# Bancos locais e arquivos auxiliares SQLite.
+*.sqlite
+*.sqlite-*
+*.db
+*.db-*

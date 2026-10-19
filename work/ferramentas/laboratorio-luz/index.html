@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Laboratório de luz | ULTRALED</title>
+  <link rel="stylesheet" href="css/laboratorio.css">
+</head>
+<body>
+  <header class="cabecalho">
+    <div class="marca">ULTRALED<small>LABORATÓRIO DE LUZ</small></div>
+    <div class="transporte">
+      <button type="button" id="reproduzir">Reproduzir</button>
+      <button type="button" id="pausar">Pausar</button>
+    </div>
+    <div class="qualidade" role="radiogroup" aria-label="Qualidade">
+      <label><input type="radio" name="qualidade" value="padrao" checked> Padrão</label>
+      <label><input type="radio" name="qualidade" value="economico"> Econômico</label>
+      <label><input type="radio" name="qualidade" value="desligado"> Desligado</label>
+    </div>
+    <button type="button" class="interruptor-tema" id="alternar-tema" role="switch" aria-checked="false" aria-label="Tema claro">
+      <span class="trilho-interruptor"><span class="pino-interruptor" aria-hidden="true">☀</span></span>
+    </button>
+  </header>
+  <main class="layout">
+    <aside class="painel biblioteca">
+      <h2>EXEMPLOS</h2>
+      <div class="lista" id="lista-efeitos"></div>
+      <h2>RASCUNHOS</h2>
+      <div class="lista" id="lista-rascunhos"></div>
+      <form class="mistura">
+        <h2>MISTURA</h2>
+        <label>Preset <select id="preset-base"></select></label>
+        <label>Padrão <select id="padrao-base"></select></label>
+        <label>Duração ms <input id="duracao-ms" type="number" min="200" max="120000" value="4000"></label>
+        <label><input id="laco" type="checkbox" checked> Laço</label>
+        <button type="button" id="gerar-clipe">Gerar clipe</button>
+      </form>
+    </aside>
+    <section class="palco-caixa" aria-label="Palco">
+      <div class="palco" id="palco">
+        <div class="parede"></div>
+        <div class="chao"></div>
+        <div class="luz-ambiente"></div>
+        <div class="luz-linear"></div>
+        <div class="luz-pontual"></div>
+        <div class="objeto"></div>
+      </div>
+    </section>
+    <aside class="painel editor-painel">
+      <h2>JSON</h2>
+      <textarea class="editor" id="editor-json" spellcheck="false" aria-label="Efeito JSON"></textarea>
+      <div class="transporte">
+        <button type="button" id="aplicar-json">Aplicar</button>
+        <button type="button" id="guardar-rascunho">Guardar</button>
+      </div>
+      <label>Arquivo <input id="arquivo-json" type="file" accept="application/json,.json"></label>
+      <div class="avisos" id="avisos" role="status"></div>
+    </aside>
+  </main>
+  <footer class="rodape">
+    <span id="status" role="status">Pronto.</span>
+    <span class="leitura" id="leitura-quadro">—</span>
+  </footer>
+  <script src="js/laboratorio.js"></script>
+  <script src="js/regras.js"></script>
+  <script src="js/presets.js"></script>
+  <script src="js/padroes.js"></script>
+  <script src="js/misturador.js"></script>
+  <script src="js/validador.js"></script>
+  <script src="js/motor.js"></script>
+  <script src="js/renderizador-css.js"></script>
+  <script src="js/efeitos-exemplo.js"></script>
+  <script src="js/banco-local.js"></script>
+  <script src="js/interface.js"></script>
+</body>
+</html>

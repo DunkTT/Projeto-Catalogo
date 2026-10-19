@@ -1,0 +1,3 @@
+/* Feedback compartilhado do arraste vertical nas páginas do site.
+   O toque mantém a rolagem nativa do navegador. */
+.arrastando-vertical,.arrastando-vertical *{cursor:grabbing!important;user-select:none!important}

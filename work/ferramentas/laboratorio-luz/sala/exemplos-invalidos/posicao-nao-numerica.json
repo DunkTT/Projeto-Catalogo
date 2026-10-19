@@ -1,0 +1,135 @@
+{
+  "versao": 1,
+  "id": "sala-estar-industrial",
+  "cena": {
+    "ambiente": "sala-estar",
+    "paleta": null,
+    "fontes": [
+      {
+        "id": "luz-principal",
+        "tipo": "pontual",
+        "posicao": [
+          460,
+          "231",
+          0
+        ],
+        "tom": "neutro",
+        "intensidade": 0.7
+      },
+      {
+        "id": "luz-apoio",
+        "tipo": "pontual",
+        "posicao": [
+          676,
+          322,
+          0
+        ],
+        "tom": "quente",
+        "intensidade": 0.4
+      }
+    ]
+  },
+  "visual": {
+    "arquivo": "sala-estar.svg",
+    "coordenadas": "svg-local",
+    "viewBox": [
+      0,
+      0,
+      960,
+      760
+    ],
+    "camadas": [
+      {
+        "id": "fundo",
+        "papel": "base"
+      },
+      {
+        "id": "paredes",
+        "papel": "superficie"
+      },
+      {
+        "id": "piso",
+        "papel": "superficie"
+      },
+      {
+        "id": "area-luz-principal",
+        "papel": "luz"
+      },
+      {
+        "id": "area-luz-piso",
+        "papel": "luz"
+      },
+      {
+        "id": "janela",
+        "papel": "objeto"
+      },
+      {
+        "id": "tapete",
+        "papel": "objeto"
+      },
+      {
+        "id": "sofa",
+        "papel": "objeto"
+      },
+      {
+        "id": "mesa",
+        "papel": "objeto"
+      },
+      {
+        "id": "area-luz-apoio",
+        "papel": "luz"
+      },
+      {
+        "id": "luminaria-apoio",
+        "papel": "objeto"
+      },
+      {
+        "id": "luminaria-principal",
+        "papel": "objeto"
+      }
+    ],
+    "vinculos": [
+      {
+        "fonte": "luz-principal",
+        "origem": "ponto-luz-principal",
+        "camadas": [
+          "area-luz-principal",
+          "area-luz-piso"
+        ]
+      },
+      {
+        "fonte": "luz-apoio",
+        "origem": "ponto-luz-apoio",
+        "camadas": [
+          "area-luz-apoio"
+        ]
+      }
+    ]
+  },
+  "opcoesPermitidas": {
+    "luz-principal": {
+      "tons": [
+        "quente",
+        "neutro",
+        "frio"
+      ],
+      "intensidades": [
+        0.7
+      ]
+    },
+    "luz-apoio": {
+      "tons": [
+        "quente"
+      ],
+      "intensidades": [
+        0,
+        0.4
+      ]
+    }
+  },
+  "capacidadesExigidas": {
+    "ambientes": true,
+    "paletas": false,
+    "multiplasFontes": true
+  }
+}

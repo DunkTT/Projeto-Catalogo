@@ -1,0 +1,350 @@
+<!doctype html>
+<!-- Prévia local da sala usando o contrato e o núcleo de iluminação existente.
+     SVG e JSON incorporados permitem abrir sem servidor; não carrega produtos. -->
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sala de estar · Estudo visual</title>
+  <style>
+    :root {
+      color-scheme: light; --pagina: #e8e8e2; --texto: #26322e; --secundario: #54615a;
+      --claro: #f4f3ed; --escuro: #202927; --borda: #aeb4ac; --texto-escuro: #eceee5;
+      --espaco: 16px; --espaco-amplo: 32px; --raio: 8px; --largura: 1400px;
+      --pino: #315f74; --trilho: #d8e8e7; --borda-trilho: #759ba4;
+      --duracao: 220ms; --alvo: 44px;
+      --controle: #f4f3ed; --texto-cena-clara: #26322e;
+    }
+    html[data-tema="escuro"] {
+      color-scheme: dark; --pagina: #171e1c; --texto: #eceee5; --secundario: #bbc5bd;
+      --controle: #2b3531; --borda: #6e7e74; --pino: #e8c477;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; padding: var(--espaco-amplo); background: var(--pagina); color: var(--texto); font-family: system-ui, sans-serif; }
+    main { max-width: var(--largura); margin-inline: auto; }
+    h1 { margin: 0; font-size: clamp(1.4rem, 3vw, 2rem); }
+    .cabecalho { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: var(--espaco); }
+    p { color: var(--secundario); line-height: 1.5; }
+    .cenas { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--espaco); }
+    figure { min-width: 0; margin: 0; border: 1px solid var(--borda); border-radius: var(--raio); background: var(--claro); color: var(--texto-cena-clara); }
+    figure:last-child { background: var(--escuro); color: var(--texto-escuro); }
+    img { display: block; width: 100%; height: auto; }
+    .palco { display: block; width: 100%; aspect-ratio: 960 / 760; }
+    fieldset { display: flex; flex-wrap: wrap; gap: var(--espaco); align-items: center; min-width: 0; margin: 0; padding: var(--espaco); border: 1px solid var(--borda); border-radius: var(--raio); }
+    [hidden] { display: none !important; }
+    .identidade-cena { display: flex; flex-wrap: wrap; gap: var(--espaco); }
+    .identidade-cena div { display: grid; gap: calc(var(--espaco) / 4); }
+    dt { font-size: .875rem; color: var(--secundario); }
+    dd { margin: 0; }
+    details { margin-block: var(--espaco); }
+    summary { min-height: var(--alvo); cursor: pointer; padding-block: calc(var(--espaco) / 2); }
+    label { display: flex; flex-wrap: wrap; align-items: center; gap: var(--espaco); }
+    select, button, input { font: inherit; max-width: 100%; min-height: var(--alvo); }
+    select, button { color: var(--texto); background: var(--controle); border: 1px solid var(--borda); border-radius: var(--raio); padding: 8px; }
+    button[role="switch"] { display: inline-flex; align-items: center; gap: 8px; }
+    .trilho-interruptor { display: inline-flex; align-items: center; width: 44px; height: 26px; padding: 3px; border: 1px solid var(--borda-trilho); border-radius: 99px; background: var(--trilho); }
+    .pino-interruptor { width: 18px; height: 18px; border-radius: 50%; background: var(--pino); transform: translateX(0); transition: transform var(--duracao) cubic-bezier(.2,.7,.2,1); }
+    [aria-checked="true"] .pino-interruptor { transform: translateX(18px); }
+    :focus-visible { outline: 2px solid var(--pino); outline-offset: 4px; }
+    @media (prefers-reduced-motion: reduce) { .pino-interruptor { transition: none; } }
+    figcaption { padding: var(--espaco); font-size: .875rem; }
+    a { color: inherit; text-underline-offset: .2em; }
+    a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
+    @media (max-width: 750px) {
+      body { padding: var(--espaco); }
+      .cenas { grid-template-columns: minmax(0, 1fr); }
+    }
+  </style>
+  <link rel="stylesheet" href="../../../catalogo-web/css_style/interruptor-tema.css">
+</head>
+<body>
+  <main>
+    <header class="cabecalho">
+      <h1>Sala de estar</h1>
+      <button id="alternar-tema" class="interruptor-tema" type="button" role="switch" aria-label="Tema claro" aria-checked="false" disabled><span class="trilho-interruptor" aria-hidden="true"><span class="pino-interruptor"></span></span>Tema claro</button>
+    </header>
+    <dl class="identidade-cena">
+      <div><dt>Ambiente</dt><dd>Sala de estar</dd></div>
+      <div><dt>Cena</dt><dd>Industrial acolhedor · modelo único</dd></div>
+    </dl>
+    <p id="aviso-ilustrativo">Visualização ilustrativa.</p>
+    <fieldset disabled aria-describedby="aviso-ilustrativo">
+      <legend>Escolha a iluminação</legend>
+      <label>Iluminação geral <select id="tom"></select></label>
+      <button id="apoio" type="button" role="switch" aria-checked="false" aria-label="Luz de apoio" hidden><span aria-hidden="true" class="trilho-interruptor"><span class="pino-interruptor"></span></span>Luz de apoio <span id="estado-apoio" aria-hidden="true"></span></button>
+    </fieldset>
+    <p id="estado" role="status" aria-live="polite">Preparando sala…</p>
+    <noscript><p>Ative JavaScript para usar os controles. A arte estática continua disponível.</p></noscript>
+    <div class="cenas">
+      <figure>
+        <div class="palco"><img src="sala-estar.svg" width="960" height="760" alt="Sala em perspectiva, com sofá verde acinzentado, mesa de madeira, janela e duas luminárias, sobre fundo claro."></div>
+        <figcaption>Superfície clara</figcaption>
+      </figure>
+      <figure>
+        <div class="palco"><img src="sala-estar.svg" width="960" height="760" alt="A mesma sala e seus materiais sobre fundo escuro."></div>
+        <figcaption>Superfície escura</figcaption>
+      </figure>
+    </div>
+    <p>Representação ilustrativa. <a href="sala-estar.svg">Abrir arte em tamanho livre</a></p>
+    <details>
+      <summary>Ajustes do laboratório</summary>
+      <fieldset disabled>
+        <legend>Prévia local</legend>
+        <label>Efeitos <select id="qualidade"><option value="padrao">Padrão</option><option value="economico">Econômico</option><option value="desligado">Desligado</option></select></label>
+        <label>Carregar cena JSON <input id="arquivo-cena" type="file" accept=".json,application/json"></label>
+      </fieldset>
+    </details>
+  </main>
+<!-- INICIO DADOS SALA -->
+<script type="application/json" id="contrato-sala">{
+  "versao": 1,
+  "id": "sala-estar-industrial",
+  "cena": {
+    "ambiente": "sala-estar",
+    "paleta": null,
+    "fontes": [
+      {
+        "id": "luz-principal",
+        "tipo": "pontual",
+        "posicao": [
+          460,
+          231,
+          0
+        ],
+        "tom": "neutro",
+        "intensidade": 0.7
+      },
+      {
+        "id": "luz-apoio",
+        "tipo": "pontual",
+        "posicao": [
+          676,
+          322,
+          0
+        ],
+        "tom": "quente",
+        "intensidade": 0.4
+      }
+    ]
+  },
+  "visual": {
+    "arquivo": "sala-estar.svg",
+    "coordenadas": "svg-local",
+    "viewBox": [
+      0,
+      0,
+      960,
+      760
+    ],
+    "camadas": [
+      {
+        "id": "fundo",
+        "papel": "base"
+      },
+      {
+        "id": "paredes",
+        "papel": "superficie"
+      },
+      {
+        "id": "piso",
+        "papel": "superficie"
+      },
+      {
+        "id": "area-luz-principal",
+        "papel": "luz"
+      },
+      {
+        "id": "area-luz-piso",
+        "papel": "luz"
+      },
+      {
+        "id": "janela",
+        "papel": "objeto"
+      },
+      {
+        "id": "tapete",
+        "papel": "objeto"
+      },
+      {
+        "id": "sofa",
+        "papel": "objeto"
+      },
+      {
+        "id": "mesa",
+        "papel": "objeto"
+      },
+      {
+        "id": "area-luz-apoio",
+        "papel": "luz"
+      },
+      {
+        "id": "luminaria-apoio",
+        "papel": "objeto"
+      },
+      {
+        "id": "luminaria-principal",
+        "papel": "objeto"
+      }
+    ],
+    "vinculos": [
+      {
+        "fonte": "luz-principal",
+        "origem": "ponto-luz-principal",
+        "camadas": [
+          "area-luz-principal",
+          "area-luz-piso"
+        ]
+      },
+      {
+        "fonte": "luz-apoio",
+        "origem": "ponto-luz-apoio",
+        "camadas": [
+          "area-luz-apoio"
+        ]
+      }
+    ]
+  },
+  "opcoesPermitidas": {
+    "luz-principal": {
+      "tons": [
+        "quente",
+        "neutro",
+        "frio"
+      ],
+      "intensidades": [
+        0.7
+      ]
+    },
+    "luz-apoio": {
+      "tons": [
+        "quente"
+      ],
+      "intensidades": [
+        0,
+        0.4
+      ]
+    }
+  },
+  "capacidadesExigidas": {
+    "ambientes": true,
+    "paletas": false,
+    "multiplasFontes": true
+  }
+}</script>
+<template id="arte-sala"><!-- Estudo visual de uma sala de estar para a Experiência visual ULTRALED.
+     Grupos identificados separam superfícies, mobiliário e áreas de luz.
+     Coordenadas são artísticas em SVG; não representam medidas físicas. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 760" role="img" aria-labelledby="titulo descricao">
+  <title id="titulo">Sala de estar industrial em camadas</title>
+  <desc id="descricao">Sala com parede de concreto, janela à esquerda, sofá verde acinzentado, mesa de madeira, pendente central e luminária lateral. Ilustração estática em perspectiva discreta.</desc>
+  <defs>
+    <style>
+      :root {
+        --concreto: #d4d0c7; --parede-lateral: #b5b8b1; --piso: #a28d76;
+        --borda: #565b57; --grafite: #303b3b; --metal-claro: #515e5b;
+        --madeira: #a1744e; --madeira-topo: #c39a70; --madeira-sombra: #76543c;
+        --tecido: #6c7e76; --tecido-claro: #87958b; --tecido-sombra: #52665e;
+        --linho: #d8c9ad; --linho-sombra: #b9a88a; --tapete: #c3bbaa;
+        --ceu: #bdcbd0; --ceu-claro: #dbe2de; --luz: #fff1d4; --sombra: #34443f;
+      }
+      .contorno { stroke: var(--borda); stroke-width: 1.5; stroke-linejoin: round; }
+      .estrutura { stroke: var(--grafite); stroke-width: 6; stroke-linecap: round; fill: none; }
+    </style>
+    <linearGradient id="vidro" x2="0" y2="1">
+      <stop stop-color="var(--ceu)"/><stop offset="1" stop-color="var(--ceu-claro)"/>
+    </linearGradient>
+    <radialGradient id="banho-parede">
+      <stop stop-color="var(--luz)" stop-opacity=".26"/><stop offset="1" stop-color="var(--luz)" stop-opacity="0"/>
+    </radialGradient>
+    <clipPath id="limite-parede"><path d="M82 144 700 144 700 457 82 457Z"/></clipPath>
+    <clipPath id="limite-piso"><path d="M82 457 700 457 878 578 260 578Z"/></clipPath>
+  </defs>
+
+  <g id="fundo">
+    <path d="M94 490 705 490 905 623 262 623Z" fill="var(--sombra)" opacity=".10"/>
+  </g>
+  <g id="paredes" class="contorno">
+    <path id="parede-principal" d="M82 144H700V457H82Z" fill="var(--concreto)"/>
+    <path id="parede-lateral" d="M700 144 878 265V578L700 457Z" fill="var(--parede-lateral)"/>
+    <path d="M82 144H700L878 265" fill="none" stroke="var(--linho)" stroke-width="5"/>
+    <path d="M82 447H700L878 568" fill="none" stroke="var(--borda)" stroke-opacity=".45" stroke-width="4"/>
+    <path d="M385 146V447M84 310H699" fill="none" stroke-opacity=".12"/>
+  </g>
+  <g id="piso" class="contorno">
+    <path d="M82 457H700L878 578H260Z" fill="var(--piso)"/>
+    <path d="M260 578H878V593H260ZM82 457 260 578V593L82 472Z" fill="var(--madeira-sombra)"/>
+    <path d="M130 490H749M183 526H801M236 562H855" fill="none" stroke-opacity=".2"/>
+  </g>
+  <g id="area-luz-principal" clip-path="url(#limite-parede)" pointer-events="none" opacity="0">
+    <ellipse cx="462" cy="298" rx="226" ry="180" fill="url(#banho-parede)"/>
+  </g>
+  <g id="area-luz-piso" clip-path="url(#limite-piso)" pointer-events="none" opacity="0">
+    <ellipse cx="505" cy="507" rx="228" ry="69" fill="var(--luz)" opacity=".07"/>
+  </g>
+  <g id="janela" class="contorno">
+    <path d="M119 199H282V372H119Z" fill="var(--grafite)"/>
+    <path d="M128 208H273V363H128Z" fill="url(#vidro)"/>
+    <path d="M128 333 170 309 210 327 249 303 273 315V363H128Z" fill="var(--tecido-claro)" opacity=".35" stroke="none"/>
+    <path d="M201 208V363M128 282H273" stroke="var(--grafite)" stroke-width="6"/>
+    <path d="M113 372H287L299 380H125Z" fill="var(--madeira-topo)"/>
+    <path d="M125 380H299V386H125Z" fill="var(--madeira-sombra)"/>
+  </g>
+  <g id="tapete">
+    <path d="M259 459H637L783 555H405Z" fill="var(--tapete)" class="contorno"/>
+    <path d="M281 466H631L755 548H409Z" fill="none" stroke="var(--linho)" stroke-width="3"/>
+  </g>
+  <g id="sofa" class="contorno">
+    <path d="M294 451 619 451 700 497 363 497Z" fill="var(--sombra)" opacity=".14" stroke="none"/>
+    <path d="M330 436V462M627 446V473M395 476V491" class="estrutura"/>
+    <path d="M307 332Q307 317 323 317H575Q591 317 591 332V406H307Z" fill="var(--tecido-sombra)"/>
+    <path d="M315 331Q315 324 325 324H439V394H315ZM447 324H574Q583 324 583 334V394H447Z" fill="var(--tecido)"/>
+    <path d="M308 389H585L655 433H377Z" fill="var(--tecido-claro)"/>
+    <path d="M377 433H655V476H377Z" fill="var(--tecido)"/>
+    <path d="M308 389 377 433V476L308 432Z" fill="var(--tecido-sombra)"/>
+    <path d="M454 391 519 432M519 435V472" fill="none" stroke-opacity=".6"/>
+    <path d="M296 365H319L389 409H364Z" fill="var(--tecido-claro)"/>
+    <path d="M296 365 364 409V470L296 427Z" fill="var(--tecido-sombra)"/>
+    <path d="M364 409H389V470H364Z" fill="var(--tecido)"/>
+    <path d="M579 365H601L670 409H647Z" fill="var(--tecido-claro)"/>
+    <path d="M601 365 670 409V470L601 427Z" fill="var(--tecido-sombra)"/>
+    <path d="M647 409H670V470H647Z" fill="var(--tecido)"/>
+    <path d="M333 348Q332 340 341 339L379 342 394 389 345 386Z" fill="var(--linho)"/>
+    <path d="M528 345 565 339Q571 339 573 347L583 385 539 391Z" fill="var(--linho-sombra)"/>
+  </g>
+  <g id="mesa" class="contorno">
+    <path d="M450 532 612 532 653 557H493Z" fill="var(--sombra)" opacity=".15" stroke="none"/>
+    <path d="M451 486V534M594 486V534M639 515V554M497 515V554" class="estrutura"/>
+    <path d="M435 477H597L652 511H490Z" fill="var(--madeira-topo)"/>
+    <path d="M490 511H652V521H490ZM435 477 490 511V521L435 487Z" fill="var(--madeira-sombra)"/>
+    <path d="M466 484H575M485 497H608" stroke="var(--madeira)" stroke-opacity=".6"/>
+    <ellipse cx="549" cy="497" rx="24" ry="8" fill="var(--grafite)"/>
+    <path d="M529 489Q531 500 549 500T569 489Z" fill="var(--metal-claro)"/>
+    <ellipse cx="549" cy="489" rx="20" ry="6" fill="var(--concreto)"/>
+  </g>
+  <g id="area-luz-apoio" clip-path="url(#limite-parede)" pointer-events="none" opacity="0">
+    <ellipse cx="661" cy="319" rx="53" ry="79" fill="url(#banho-parede)"/>
+  </g>
+  <g id="luminaria-apoio" class="contorno">
+    <ellipse cx="722" cy="491" rx="29" ry="10" fill="var(--sombra)" opacity=".15" stroke="none"/>
+    <ellipse cx="713" cy="481" rx="25" ry="8" fill="var(--grafite)"/>
+    <path d="M713 479V316Q713 300 694 300H676" class="estrutura"/>
+    <path d="M665 291H687L703 322H649Z" fill="var(--grafite)"/>
+    <ellipse id="ponto-luz-apoio" cx="676" cy="322" rx="27" ry="6" fill="var(--linho)"/>
+  </g>
+  <g id="luminaria-principal" class="contorno">
+    <path d="M443 144H477V149H443Z" fill="var(--grafite)"/>
+    <path d="M460 149V202" stroke="var(--grafite)" stroke-width="3"/>
+    <path d="M440 201H480L511 231H409Z" fill="var(--grafite)"/>
+    <ellipse id="ponto-luz-principal" cx="460" cy="231" rx="51" ry="9" fill="var(--linho)"/>
+    <path d="M447 204H476L492 220" fill="none" stroke="var(--metal-claro)" stroke-width="2"/>
+  </g>
+</svg></template>
+<!-- FIM DADOS SALA -->
+<script src="../../../catalogo-web/js/iluminacao/presets.js"></script>
+<script src="../../../catalogo-web/js/iluminacao/motor.js"></script>
+<script src="../../../catalogo-web/js/tema.js"></script>
+<script src="validador.js"></script>
+<script src="renderizador-svg.js"></script>
+<script src="previa.js"></script>
+</body>
+</html>

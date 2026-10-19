@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gestão local | ULTRALED</title>
+  <link rel="stylesheet" href="/app.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand"><span class="brand-mark">U</span><span>ULTRALED <small>GESTÃO LOCAL</small></span></div>
+      <nav class="nav" aria-label="Áreas">
+        <button class="active" data-view="products" type="button">Produtos <span id="nav-products"></span></button>
+        <button data-view="shortages" type="button">Faltas <span id="nav-shortages"></span></button>
+        <button data-view="invoices" type="button">Notas <span id="nav-invoices"></span></button>
+        <button data-view="partners" type="button">Parceiros <span id="nav-partners"></span></button>
+      </nav>
+      <a class="export-link" href="/api/export" download>Exportar JSON ↗</a>
+    </header>
+    <div class="statusbar"><span class="local-indicator">● LOCAL</span><span id="status-message" role="status" aria-live="polite">Carregando dados…</span><span class="read-only">BLING: SEM ESCRITA</span></div>
+
+    <main>
+      <section class="view active" id="view-products" aria-label="Produtos">
+        <div class="sectionbar"><strong>PRODUTOS</strong><span id="product-count"></span><span class="section-hint">Selecione uma linha para comparar e editar</span></div>
+        <div class="filters">
+          <input id="search" type="search" placeholder="Buscar nome, SKU ou ID" aria-label="Buscar produtos" autocomplete="off">
+          <select id="category-filter" aria-label="Categoria"></select>
+          <select id="subcategory-filter" aria-label="Subcategoria"></select>
+          <select id="partner-filter" aria-label="Parceiro"></select>
+          <select id="product-status-filter" aria-label="Estado"><option value="">Todos os estados</option><option value="active">Ativos</option><option value="blocked">Bloqueados</option><option value="changed">Com proposta</option></select>
+          <button id="clear-filters" type="button" class="quiet-button">Limpar</button>
+        </div>
+        <div class="product-workspace">
+          <div class="product-table-wrap">
+            <table class="data-table product-table"><thead><tr><th>SKU</th><th>PRODUTO</th><th>CATEGORIA</th><th>PARCEIRO</th><th>ESTADO</th></tr></thead><tbody id="product-list"></tbody></table>
+          </div>
+          <aside id="product-detail" class="inspector" aria-label="Comparação e edição do produto"></aside>
+        </div>
+      </section>
+
+      <section class="view" id="view-shortages" aria-label="Faltas" hidden>
+        <div class="sectionbar"><strong>FALTAS / PRÓXIMO PEDIDO</strong><span id="shortage-count"></span><a class="section-action" href="/api/suggestions.csv" download>Exportar CSV ↗</a></div>
+        <form id="shortage-form" class="inline-form">
+          <label>PRODUTO <select id="shortage-product" required></select></label>
+          <label>FORNECEDOR <input id="shortage-supplier" maxlength="200" placeholder="Nome"></label>
+          <label>PARCEIRO <select id="shortage-partner"></select></label>
+          <label>PEDIDO <input id="shortage-requested" type="number" min="0.001" step="any" required></label>
+          <label>RECEBIDO <input id="shortage-received" type="number" min="0" step="any" value="0" required></label>
+          <label>OBSERVAÇÃO <input id="shortage-note" maxlength="500" placeholder="Opcional"></label>
+          <button class="primary-button" type="submit">Guardar falta</button>
+        </form>
+        <div class="table-heading"><strong>SUGESTÕES ATIVAS</strong><span id="suggestion-count"></span></div>
+        <div class="scroll-table"><table class="data-table"><thead><tr><th>PRODUTO</th><th>SKU</th><th>FORNECEDOR</th><th>PARCEIRO</th><th>PENDENTE</th><th>OBSERVAÇÃO</th><th>AÇÕES</th></tr></thead><tbody id="suggestions"></tbody></table></div>
+        <div class="table-heading"><strong>HISTÓRICO</strong><span id="history-count"></span></div>
+        <div class="scroll-table"><table class="data-table"><thead><tr><th>PRODUTO</th><th>FORNECEDOR</th><th>PEDIDO</th><th>RECEBIDO</th><th>FALTA</th><th>ESTADO</th><th>DATA</th><th>AÇÃO</th></tr></thead><tbody id="shortage-list"></tbody></table></div>
+      </section>
+
+      <section class="view" id="view-invoices" aria-label="Notas" hidden>
+        <div class="sectionbar"><strong>NOTAS / CONTAGEM</strong><span id="invoice-count"></span><label class="file-button">Importar XML<input id="xml-file" type="file" accept=".xml,text/xml,application/xml"></label></div>
+        <div class="invoice-workspace">
+          <div class="invoice-list-wrap"><div class="table-heading"><strong>NOTAS IMPORTADAS</strong></div><div id="invoice-list"></div></div>
+          <div id="invoice-detail" class="invoice-detail"></div>
+        </div>
+      </section>
+
+      <section class="view" id="view-partners" aria-label="Parceiros" hidden>
+        <div class="sectionbar"><strong>PARCEIROS</strong><span id="partner-count"></span></div>
+        <form id="partner-form" class="inline-form partner-form"><label>NOVO PARCEIRO <input id="partner-name" maxlength="120" required placeholder="Nome"></label><button class="primary-button" type="submit">Adicionar</button></form>
+        <div class="scroll-table"><table class="data-table"><thead><tr><th>PARCEIRO</th><th>PRODUTOS</th><th>ESTADO</th><th>AÇÃO</th></tr></thead><tbody id="partner-list"></tbody></table></div>
+      </section>
+    </main>
+  </div>
+  <datalist id="product-options"></datalist>
+  <script src="/app.js"></script>
+</body>
+</html>

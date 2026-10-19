@@ -1,0 +1,73 @@
+/* Apresenta a identidade do cabeçalho de forma igual nas quatro páginas públicas.
+   Mantém o contexto no desktop e prioriza o nome em duas linhas no celular. */
+.cabecalho .marca {
+  --marca-simbolo: 46px;
+  --marca-espaco: 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--marca-espaco);
+  min-width: 0;
+}
+
+.cabecalho .marca .marca-simbolo {
+  display: grid;
+  place-items: center;
+  flex: 0 0 var(--marca-simbolo);
+  width: var(--marca-simbolo);
+  height: var(--marca-simbolo);
+  border: 1px solid color-mix(in srgb, var(--texto, #edf2fa) 15%, transparent);
+  border-radius: 13px;
+  background: color-mix(in srgb, var(--texto, #edf2fa) 5%, transparent);
+  color: var(--destaque, var(--luz, #b9ceee));
+  font-size: 28px;
+  line-height: 1;
+}
+
+.cabecalho .marca .marca-texto {
+  display: grid;
+  min-width: 0;
+  gap: 1px;
+  line-height: 1.2;
+}
+
+.cabecalho .marca .marca-nome {
+  display: block;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: -.03em;
+  line-height: inherit;
+}
+
+.cabecalho .marca .marca-linha {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  min-width: 0;
+  white-space: nowrap;
+}
+
+.cabecalho .marca .marca-localidade {
+  font-size: .8rem;
+  font-weight: 550;
+  line-height: inherit;
+}
+
+.cabecalho .marca .marca-contexto {
+  display: inline;
+  color: var(--suave);
+  font-size: .7rem;
+  line-height: inherit;
+}
+
+.cabecalho .marca .marca-contexto:not(:empty)::before { content: "· "; }
+
+@media (max-width: 750px) {
+  .cabecalho .marca {
+    --marca-simbolo: 40px;
+    --marca-espaco: 8px;
+  }
+
+  .cabecalho .marca .marca-contexto { display: none; }
+
+  body[data-pagina="inicio"] .cabecalho .marca .marca-texto { display: grid; }
+}

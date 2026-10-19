@@ -1,0 +1,81 @@
+<!doctype html>
+<!-- Home com introdução visual contínua e acessos ao catálogo e à próxima etapa da experiência. -->
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark light">
+  <title>ULTRALED Hortolândia | Catálogo de iluminação e elétrica</title>
+  <meta name="description" content="Explore o catálogo ULTRALED Hortolândia: iluminação, materiais elétricos, marcas, tons de luz e acabamentos para o seu próximo projeto.">
+  <link rel="canonical" href="https://ultraled-hortolandia-catalogo.pages.dev/">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="pt_BR">
+  <meta property="og:title" content="ULTRALED Hortolândia · Iluminação e elétrica">
+  <meta property="og:description" content="Encontre produtos, compare tons e acabamentos e descubra possibilidades para o seu projeto.">
+  <meta property="og:url" content="https://ultraled-hortolandia-catalogo.pages.dev/">
+  <!-- Recursos locais; não há origens de terceiros para preconnect. -->
+
+  <!-- Fontes locais com fallbacks explícitos: sem download ou bloqueio de texto. Ao adicionar @font-face, definir font-display: swap na regra. -->
+  <link rel="preload" href="./styles.css" as="style">
+  <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="./css_style/entrada-experiencia.css">
+  <link rel="stylesheet" href="./css_style/interruptor-tema.css">
+  <link rel="stylesheet" href="./css_style/marca-cabecalho.css">
+  <link rel="stylesheet" href="./css_style/controles-cabecalho.css">
+  <link rel="stylesheet" href="./css_style/arraste-pagina.css">
+  <script src="./js/arraste-pagina.js" defer></script>
+  <script src="./js/iluminacao/presets.js" defer></script>
+  <script src="./js/iluminacao/motor.js" defer></script>
+  <script src="./js/iluminacao/renderizador-css.js" defer></script>
+  <script src="./js/tema.js" defer></script>
+  <script src="./js/inicio.js" defer></script>
+</head>
+<body data-pagina="inicio">
+  <a class="pular-conteudo" href="#conteudo-principal">Pular para o conteúdo</a>
+  <div class="pagina">
+    <header class="cabecalho">
+      <a class="marca" href="./index.html" aria-label="ULTRALED Hortolândia — início"><span class="logo marca-simbolo" aria-hidden="true">✧</span><span class="marca-texto"><strong class="marca-nome">ULTRALED</strong><span class="marca-linha"><span class="marca-localidade">Hortolândia</span><small class="marca-contexto">Seu espaço para criar com luz</small></span></span></a>
+      <nav class="navegacao controles-experiencia" aria-label="Preferências e suporte">
+        <button id="alternar-tema" class="interruptor-tema" type="button" role="switch" aria-checked="false" aria-label="Modo claro" disabled><span class="trilho-interruptor" aria-hidden="true"><span class="pino-interruptor">☾</span></span><span class="rotulo-compacto" aria-hidden="true">Tema</span><span class="rotulo-controle">Modo claro</span></button>
+        <button class="botao-ajuda" type="button" data-painel="ajuda-experiencia" aria-controls="ajuda-experiencia" aria-expanded="false" aria-label="Ajuda e informações do site"><span aria-hidden="true">?</span><span class="rotulo-controle">Ajuda</span></button>
+        <button type="button" data-painel="contato-experiencia" aria-controls="contato-experiencia" aria-expanded="false" aria-label="Contato"><span aria-hidden="true">✉</span><span class="rotulo-controle">Contato</span></button>
+      </nav>
+    </header>
+    <main id="conteudo-principal" tabindex="-1">
+      <section class="intro-experiencia" aria-labelledby="titulo-hub">
+        <div class="texto-intro">
+          <span class="sobretitulo">Bem-vindo à ULTRALED</span>
+          <h1 id="titulo-hub">Imagine a luz no seu espaço.</h1>
+          <p>Explore ambientes e descubra como a luz pode mudar cada cena.</p>
+          <div class="acoes-intro">
+            <a class="acao principal acao-luminosa" href="./ambientes.html"><svg class="desenho-acao" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M7 33V13L20 5l13 8v20H7ZM20 6v9m-6 6 6-6 6 6H14Zm6 2v4m-8-2-3 3m19-3 3 3"/></svg><span><strong>Iniciar experiência</strong><small>Imagine seu ambiente</small></span><span class="seta-acao" aria-hidden="true">↗</span></a>
+            <a class="acao acao-luminosa" href="./catalogo_estoque_proto1.html"><svg class="desenho-acao" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="6" y="6" width="11" height="11" rx="2"/><rect x="23" y="6" width="11" height="11" rx="2"/><rect x="6" y="23" width="11" height="11" rx="2"/><rect x="23" y="23" width="11" height="11" rx="2"/></svg><span><strong>Catálogo</strong><small>Encontre sua próxima luz</small></span><span class="seta-acao" aria-hidden="true">↗</span></a>
+          </div>
+          <span class="assinatura-experiencia">powered by <strong>ULTRALED</strong></span>
+        </div>
+        <div class="previa-ambiente" data-periodo="dia" data-estacao="primavera" data-clima="nublado" aria-hidden="true">
+          <span class="luz-ambiente luz-ambiente-quente"></span><span class="luz-ambiente luz-ambiente-neutra"></span><span class="luz-ambiente luz-ambiente-fria"></span>
+          <span class="janela-ambiente">
+            <span class="ceu-dia"></span><span class="ceu-noite"></span><span class="sol-janela"></span><span class="lua-janela"></span><span class="nuvens-janela"></span>
+            <span class="folhagem primavera"></span><span class="folhagem verao"></span><span class="folhagem outono"></span><span class="folhagem inverno"></span>
+            <span class="chuva-janela"></span><span class="neve-janela"></span>
+          </span><span class="pendente-ambiente"></span>
+          <span class="perfil-ambiente"></span><span class="sofa-ambiente"></span><span class="piso-ambiente"></span>
+        </div>
+      </section>
+      <section class="suporte-experiencia" id="ajuda-experiencia" aria-labelledby="titulo-ajuda" tabindex="-1" hidden>
+        <h2 id="titulo-ajuda">Como começar</h2>
+        <p><strong>Iniciar experiência</strong> abre o espaço dos futuros ambientes, ainda em preparação. Em <strong>Catálogo</strong>, encontre produtos, marcas e filtros.</p>
+        <button type="button" data-fechar-painel="ajuda-experiencia">Fechar ajuda</button>
+      </section>
+      <section class="suporte-experiencia" id="contato-experiencia" aria-labelledby="titulo-contato" tabindex="-1" hidden>
+        <h2 id="titulo-contato">Visite a ULTRALED</h2>
+        <p>Rua Joseph Paul Julien Burlandy, 395 · Parque Gabriel · Hortolândia, SP.</p>
+        <p>Telefone e WhatsApp ainda não cadastrados.</p>
+        <button type="button" data-fechar-painel="contato-experiencia">Fechar contato</button>
+      </section>
+    </main>
+    <footer class="rodape"><strong>ULTRALED Hortolândia</strong><br>Catálogo baseado nos cadastros internos. Quantidades e preços devem ser confirmados com a loja.</footer>
+  </div>
+</body>
+</html>
